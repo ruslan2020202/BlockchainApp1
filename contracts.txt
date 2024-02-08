@@ -38,4 +38,8 @@ contract app {
         return users[_account].name;
     }
 
+    function getBalance(address _account) public view returns (uint){
+        uint balance = _account.balance;
+        return balance / 1 ether;
+    }
 }

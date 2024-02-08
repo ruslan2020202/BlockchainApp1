@@ -1,0 +1,41 @@
+// SPDX-License-Identifier: MIT
+pragma solidity >=0.7.4 ;
+
+contract app {
+
+    struct User{
+        string name;
+        string password;
+    }
+
+    address[] public accounts;
+    mapping (address => User) public users;
+
+    constructor(){
+        accounts.push(0x91d8A60790267145fADF9b23627c327FE4Ed980C);
+        users[accounts[0]]= User("Ruslan", "123");
+
+    }
+
+    function signup(address _account, string memory _name, string memory _password) public {
+        for(uint i = 0; i < accounts.length; i++){
+            require(accounts[i] != _account, "User found");
+        }
+        accounts.push(_account);
+        users[_account] = User(_name, _password);
+    }
+
+
+    function login(address _account, string memory _password) public view{
+            require(keccak256(abi.encode(users[_account].password)) == keccak256(abi.encode(_password)), "Failed");
+    }
+
+    function getAccounts() public view returns (address[] memory){
+        return accounts;
+    }
+
+    function getInformation(address _account) public view returns (string memory){
+        return users[_account].name;
+    }
+
+}

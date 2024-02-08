@@ -10,19 +10,19 @@
 <body>
 <h1>Sign Up</h1>
 {% if message %}
-<p>{{ message }}</p>
+    <p>{{ message }}</p>
 {% endif %}
-<form action="/signup" method="POST">
-    <label for="Name:"></label>
-    <input name = 'name' class="name" type="text" placeholder="name" required>
-    <label for="Password:"></label>
-    <input name="password" type="password" placeholder="password" required>
-    <label for="Address:"></label>
-    <select name="selected_account" id="selected_account">
-        {% for account in accounts %}
-            <option value="{{ account }}">{{ account }}</option>
-        {% endfor %}
-    </select><br><br>
+<form action="/signup" method="post">
+    <p><label for="name">Name:</label>
+        <input name='name' type="text" placeholder="name" required></p>
+    <p><label for="password">Password:</label>
+        <input name="password" type="password" placeholder="password" required></p>
+    <p><label for="address">Address:</label>
+        <select name="address">
+            {% for i in users_reg %}
+        	    <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+        </select><br><br></p>
     <input type="submit" value="signup">
 </form>
 </body>

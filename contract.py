@@ -5,7 +5,7 @@ w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
 
 accounts = w3.eth.accounts
 
-contract_address = '0x808eaa52a7073f1bE1E9370131367265e01cf9f4'
+contract_address = '0x4Cb5C1B14f1F960E3e1b2972Eea916761D6942f2'
 
 contract_abi = [
     {
@@ -76,6 +76,25 @@ contract_abi = [
                 "type": "address"
             }
         ],
+        "name": "getBalance",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_account",
+                "type": "address"
+            }
+        ],
         "name": "getInformation",
         "outputs": [
             {
@@ -132,4 +151,3 @@ contract_abi = [
 ]
 
 contract = w3.eth.contract(address=contract_address, abi=contract_abi)
-

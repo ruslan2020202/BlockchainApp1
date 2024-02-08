@@ -1,9 +1,19 @@
-from flask import Flask, render_template, request, url_for, redirect, flash
+from flask import Flask, render_template, request, url_for, redirect, session
 
 from contract import w3, contract, accounts
-
+import time
 
 app = Flask(__name__)
+app.secret_key = 'blockchain123'
+
+
+def add_account(address):
+    session['address'] = address
+
+
+def view_account():
+    account = session.get('address')
+    return account
 
 
 @app.route('/')
@@ -39,10 +49,10 @@ def login():
     elif request.method == 'POST':
         address = request.form['address']
         password = request.form['password']
-        print(address, password)
         try:
             contract.functions.login(address, password).transact({"from": address})
-            return redirect(url_for('signed', user=address))
+            add_account(address)
+            return redirect(url_for('signed'))
         except Exception as e:
             print(e)
             message = 'Error! Incorrect address or password'
@@ -51,10 +61,28 @@ def login():
 
 @app.route('/MyAccount', methods=['GET', 'POST'])
 def signed():
-    user = request.args.get('user')
+    user = view_account()
     name = contract.functions.getInformation(user).call()
-    balance = 100
-    return render_template('signed.html', user=user, name=name, balance=balance)
+    balance = contract.functions.getBalance(user).call()
+    balance_view = f'{balance} Ether'
+    session['balance'] = balance
+    return render_template('signed.html', user=user, name=name, balance_view=balance_view)
+
+
+@app.route('/transfer', methods=['GET', 'POST'])
+def transfer():
+    users_accounts = contract.functions.getAccounts().call()
+    user = view_account()
+    balance = session.get('balance')
+    login_accounts = list(set(users_accounts[users_accounts.index(user)]).difference(set(user)))
+    if request.method == 'POST':
+        recipient = request.form['recipient']
+        sum = request.form['sum']
+        if not login_accounts:
+            message = 'There are no other registered accounts. Try again later!'
+            return render_template('transfer.html', login_accounts=login_accounts, balance=balance,
+                                   message=message)
+    return render_template('transfer.html', login_accounts=login_accounts, balance=balance)
 
 
 if __name__ == '__main__':

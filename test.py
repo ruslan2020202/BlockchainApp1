@@ -1,5 +1,5 @@
-from contract import w3, contract, accounts
-
-
-users_accounts = contract.functions.getAccounts().call()
-print(users_accounts)
+list1 = ['ruslan']
+list2 = ['ruslan', '99']
+mylist = list(set(list1[0]).difference(set(list(list2[0]))))
+if mylist:print(True)
+else:print(False)

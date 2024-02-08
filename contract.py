@@ -5,7 +5,7 @@ w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
 
 accounts = w3.eth.accounts
 
-contract_address = '0x4Cb5C1B14f1F960E3e1b2972Eea916761D6942f2'
+contract_address = '0x4f6917e4f48FF1827e2Fd6c43d4025e69203EDBd'
 
 contract_abi = [
     {
@@ -30,11 +30,6 @@ contract_abi = [
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
-    },
-    {
-        "inputs": [],
-        "stateMutability": "nonpayable",
-        "type": "constructor"
     },
     {
         "inputs": [

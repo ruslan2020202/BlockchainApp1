@@ -11,11 +11,6 @@ contract app {
     address[] public accounts;
     mapping (address => User) public users;
 
-    constructor(){
-        accounts.push(0x91d8A60790267145fADF9b23627c327FE4Ed980C);
-        users[accounts[0]]= User("Ruslan", "123");
-
-    }
 
     function signup(address _account, string memory _name, string memory _password) public {
         for(uint i = 0; i < accounts.length; i++){
@@ -38,8 +33,34 @@ contract app {
         return users[_account].name;
     }
 
-    function getBalance(address _account) public view returns (uint){
-        uint balance = _account.balance;
-        return balance / 1 ether;
+
+    struct Transfer{
+        uint id;
+        address sender;
+        address recipient;
+        uint sum;
+        bool status;
     }
+
+    Transfer[] public transfers;
+
+    function sendToTransfer (address _recipient) public payable {
+        require(msg.value > 0, "Not money");
+        require(msg.sender != _recipient, "Can't send to yourself");
+        transfers.push(Transfer(transfers.length, msg.sender, _recipient, msg.value, false));
+    }
+
+    function getTransfers () public view returns (Transfer[] memory){
+        return transfers;
+
+    }
+    function getTotransfer(uint _id) public payable {
+        require(transfers.length > _id, "There is no such transfer");
+        require(transfers[_id].status == false, "Transfer is completed" );
+        require(transfers[_id].recipient == msg.sender, "Not the recipient");
+        payable(transfers[_id].recipient).transfer(transfers[_id].sum);
+        transfers[_id].status = true;
+    }
+
+
 }

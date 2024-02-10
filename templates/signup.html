@@ -18,7 +18,7 @@
     <p><label for="password">Password:</label>
         <input name="password" type="password" placeholder="password" required></p>
     <p><label for="address">Address:</label>
-        <select name="address">
+        <select name="address" required>
             {% for i in users_reg %}
         	    <option value="{{ i }}">{{ i }}</option>
             {% endfor %}

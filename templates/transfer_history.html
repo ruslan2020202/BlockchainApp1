@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>History Transfers</title>
+</head>
+<body>
+<div class="heading-text">
+<h1>История переводов</h1>
+    <a href="{{ url_for('signed') }}"><button class="button-cancel" type="submit">Назад</button></a>
+</div>
+<style>
+    .heading-text{
+        display: flex;
+        justify-content: space-between;
+        padding-right: 15px;
+    }
+    .button-cancel{
+        margin-top: 20px;
+    }
+</style>
+{% if message %}
+<p>{{ message }}</p>
+{% endif %}
+<form action="/transfer_history" method="post">
+    {% for transfer in transfers if transfer[1]==user or transfer[2]== user %}
+    <div id="{{ transfer[0] }}">
+    <p>Отправитель: {{ transfer[1]}}
+        Получатель {{transfer[2]}}
+        Cумма {{ transfer[3]/10**18 }} ETH
+        {% if transfer[1]==user and transfer[4]==True %}
+            Закрыт
+        {% elif transfer[1]==user and transfer[4]==False %}
+            Отправлен
+        {% elif transfer[1]!=user and transfer[4]==False %}
+        	<input type="submit" value="Получить">
+            <input type="hidden" name="transfer_id" value="{{ transfer[0] }}">
+        {% elif transfer[1]!=user and transfer[4]==True %}
+            Принят
+        {% endif %}
+    </p>
+        </div>
+    {% endfor %}
+</form>
+</body>
+</html>

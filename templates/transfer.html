@@ -11,7 +11,7 @@
 <h1>Перевод</h1>
 <form action="/transfer" method="post">
     <p><label for="recipient">Выбрать получателя:</label>
-    <select name="recipient">
+    <select name="recipient" required>
       {% for account in login_accounts %}
           <option value="{{ account }}">{{ account }}</option>
       {% endfor %}
@@ -19,7 +19,7 @@
     </p>
     <p>
         <label for="sum">Сумма перевода(eth):</label>
-        <input type="number" name="sum" min="1" max="{{ balance }}" placeholder="сумма перевода">
+        <input type="number" name="sum" placeholder="сумма перевода" required>
     </p>
     <p>
         <input type="submit" value="Отправить">

@@ -5,9 +5,35 @@ w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
 
 accounts = w3.eth.accounts
 
-contract_address = '0x4f6917e4f48FF1827e2Fd6c43d4025e69203EDBd'
+contract_address = '0x6899B6b43150432c012f5d4ebe3aC636C15eD484'
 
 contract_abi = [
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_id",
+                "type": "uint256"
+            }
+        ],
+        "name": "getTotransfer",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_recipient",
+                "type": "address"
+            }
+        ],
+        "name": "sendToTransfer",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+    },
     {
         "inputs": [
             {
@@ -71,31 +97,52 @@ contract_abi = [
                 "type": "address"
             }
         ],
-        "name": "getBalance",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "_account",
-                "type": "address"
-            }
-        ],
         "name": "getInformation",
         "outputs": [
             {
                 "internalType": "string",
                 "name": "",
                 "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getTransfers",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "uint256",
+                        "name": "id",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "sender",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "recipient",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "sum",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "bool",
+                        "name": "status",
+                        "type": "bool"
+                    }
+                ],
+                "internalType": "struct app.Transfer[]",
+                "name": "",
+                "type": "tuple[]"
             }
         ],
         "stateMutability": "view",
@@ -116,6 +163,45 @@ contract_abi = [
         ],
         "name": "login",
         "outputs": [],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "transfers",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "id",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "sender",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "recipient",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "sum",
+                "type": "uint256"
+            },
+            {
+                "internalType": "bool",
+                "name": "status",
+                "type": "bool"
+            }
+        ],
         "stateMutability": "view",
         "type": "function"
     },

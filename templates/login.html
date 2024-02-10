@@ -14,13 +14,13 @@
 {% endif %}
 <form action="/login" method="post">
     <label for="address">Account</label>
-    <select name="address">
+    <select name="address" required>
         {% for account in users_accounts %}
             <option value="{{ account }}">{{ account }}</option>
         {% endfor %}
     </select><br><br>
     <label for="password">Password:</label>
-    <input type=password name='password' placeholder="password">
+    <input type=password name='password' placeholder="password" required>
     <p><input type="submit" value="login"></p>
 
 </form>

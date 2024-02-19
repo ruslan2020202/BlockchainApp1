@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, url_for, redirect, session
 
 from contract import w3, contract, accounts
-import time
 
 app = Flask(__name__)
 app.secret_key = 'blockchain123'
@@ -37,9 +36,8 @@ def signup():
             name = request.form['name']
             password = request.form['password']
             address = request.form['address']
-            print(name, password, address)
             try:
-                contract.functions.signup(address, name, password).transact({"from": address})
+                contract.functions.signup(name, password).transact({"from": address})
                 return redirect(url_for('login', users_accounts=users_accounts))
             except Exception as e:
                 message = 'Error! User already exists'
@@ -74,14 +72,13 @@ def signed():
         return redirect(url_for('home'))
     else:
         user = view_account()
-        transfers = contract.functions.getTransfers().call()
-        print(transfers)
         name = contract.functions.getInformation(user).call()
         balance_checkSum = w3.to_checksum_address(user)
         balance = w3.from_wei((w3.eth.get_balance(balance_checkSum)), 'ether')
         balance_view = f'{balance} Ether'
-        session['balance'] = balance
-        return render_template('signed.html', user=user, name=name, balance_view=balance_view)
+        balance_token = contract.functions.getBalanceToken().call({'from': user})
+        return render_template('signed.html', user=user, name=name, balance_view=balance_view,
+                               balance_token=balance_token)
 
 
 @app.route('/logout')
@@ -97,15 +94,19 @@ def transfer():
     else:
         users_accounts = contract.functions.getAccounts().call()
         user = view_account()
-        balance = session.get('balance')
         login_accounts = [i for i in users_accounts if i != user]
         if request.method == 'POST':
+            currency = request.form['currency']
             recipient = request.form['recipient']
-            sum = int(request.form['sum']) * 10 ** 18
+            sum = int(request.form['sum'])
             try:
-                contract.functions.sendToTransfer(recipient).transact({'from': user, 'value': sum})
-                return render_template('transfer.html', login_accounts=login_accounts,
-                                       message='Transfer successful')
+                if currency == 'ETH':
+                    sum = sum * 10 ** 18
+                    contract.functions.sendToTransfer(recipient).transact({'from': user, 'value': sum})
+                else:
+                    contract.functions.sendTransferToken(recipient, sum).transact({'from': user})
+                    return render_template('transfer.html', login_accounts=login_accounts,
+                                           message='Transfer successful')
             except Exception as e:
                 print(e)
                 return render_template('transfer.html', login_accounts=login_accounts,
@@ -119,13 +120,13 @@ def transfer_history():
         return redirect(url_for('home'))
     else:
         transfers = contract.functions.getTransfers().call()
-        print(transfers)
         if request.method == 'POST':
             try:
                 contract.functions.getTotransfer(int(request.form.get('transfer_id'))).transact(
                     {'from': view_account()})
                 return redirect('transfer_history')
             except Exception as e:
+                print(e)
                 return render_template('transfer_history.html', transfers=transfers,
                                        message='Transfer failed', user=view_account())
         return render_template('transfer_history.html', transfers=transfers, user=view_account())

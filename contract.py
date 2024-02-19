@@ -5,7 +5,7 @@ w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
 
 accounts = w3.eth.accounts
 
-contract_address = '0x6899B6b43150432c012f5d4ebe3aC636C15eD484'
+contract_address = '0x3cc0355721D6b9A38F3d20B7a89425aa7CdC9Acc'
 
 contract_abi = [
     {
@@ -38,9 +38,22 @@ contract_abi = [
         "inputs": [
             {
                 "internalType": "address",
-                "name": "_account",
+                "name": "_to",
                 "type": "address"
             },
+            {
+                "internalType": "uint256",
+                "name": "_value",
+                "type": "uint256"
+            }
+        ],
+        "name": "sendTransferToken",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
             {
                 "internalType": "string",
                 "name": "_name",
@@ -56,6 +69,11 @@ contract_abi = [
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
+    },
+    {
+        "inputs": [],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
     },
     {
         "inputs": [
@@ -84,6 +102,32 @@ contract_abi = [
                 "internalType": "address[]",
                 "name": "",
                 "type": "address[]"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getBalanceContract",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getBalanceToken",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
             }
         ],
         "stateMutability": "view",
@@ -138,6 +182,11 @@ contract_abi = [
                         "internalType": "bool",
                         "name": "status",
                         "type": "bool"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "currency",
+                        "type": "string"
                     }
                 ],
                 "internalType": "struct app.Transfer[]",
@@ -163,6 +212,19 @@ contract_abi = [
         ],
         "name": "login",
         "outputs": [],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "Token",
+        "outputs": [
+            {
+                "internalType": "contract myToken",
+                "name": "",
+                "type": "address"
+            }
+        ],
         "stateMutability": "view",
         "type": "function"
     },
@@ -200,6 +262,11 @@ contract_abi = [
                 "internalType": "bool",
                 "name": "status",
                 "type": "bool"
+            },
+            {
+                "internalType": "string",
+                "name": "currency",
+                "type": "string"
             }
         ],
         "stateMutability": "view",

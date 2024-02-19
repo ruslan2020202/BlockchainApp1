@@ -26,11 +26,15 @@
 <p>{{ message }}</p>
 {% endif %}
 <form action="/transfer_history" method="post">
-    {% for transfer in transfers if transfer[1]==user or transfer[2]== user %}
+    {% for transfer in transfers if transfer[1] == user or transfer[2] == user %}
     <div id="{{ transfer[0] }}">
-    <p>Отправитель: {{ transfer[1]}}
-        Получатель {{transfer[2]}}
-        Cумма {{ transfer[3]/10**18 }} ETH
+    <p>Отправитель: {{transfer[1]}}
+        Получатель: {{transfer[2]}}
+        {% if transfer[5]=='ETH' %}
+        	Cумма: {{ transfer[3]/10**18 }} {{transfer[5]}}
+        {%elif transfer[5] == 'FR' %}
+            Cумма: {{ transfer[3]}} {{transfer[5]}}
+        {% endif %}
         {% if transfer[1]==user and transfer[4]==True %}
             Закрыт
         {% elif transfer[1]==user and transfer[4]==False %}

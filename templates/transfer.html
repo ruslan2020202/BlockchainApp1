@@ -9,6 +9,7 @@
 </head>
 <body>
 <h1>Перевод</h1>
+{% set currency = ['ETH', 'FR'] %}
 <form action="/transfer" method="post">
     <p><label for="recipient">Выбрать получателя:</label>
     <select name="recipient" required>
@@ -17,8 +18,14 @@
       {% endfor %}
     </select><br><br>
     </p>
+    <label for="currency">Валюта:</label>
+    <select name="currency" required>
+        {% for val in currency %}
+            <option value="{{ val }}">{{ val }}</option>
+        {% endfor %}
+    </select><br><br>
     <p>
-        <label for="sum">Сумма перевода(eth):</label>
+        <label for="sum">Сумма перевода:</label>
         <input type="number" name="sum" placeholder="сумма перевода" required>
     </p>
     <p>

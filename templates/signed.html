@@ -11,12 +11,12 @@
 <h1>Личный кабинет</h1>
 <p><label for="account">Account: {{ user }}</label></p>
 <p><label for="name">Name: {{ name }}</label></p>
-<p><label for="balance">Balance: {{ balance_view }}</label></p>
+<p><label for="balance">Balance(ETH): {{ balance_view }}</label></p>
+<p><label for="balance_token">Balance(FR): {{ balance_token }} FR</label></p>
 <p>
     <a href="{{url_for('logout')}}"><button type="submit">Logout</button></a>
     <a href="{{ url_for("transfer") }}"><button type="submit">Transfer</button></a>
     <a href="{{ url_for("transfer_history") }}"><button type="submit">History Transfers</button></a>
-
 </p>
 </body>
 </html>

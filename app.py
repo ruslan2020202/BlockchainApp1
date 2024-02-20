@@ -105,8 +105,8 @@ def transfer():
                     contract.functions.sendToTransfer(recipient).transact({'from': user, 'value': sum})
                 else:
                     contract.functions.sendTransferToken(recipient, sum).transact({'from': user})
-                    return render_template('transfer.html', login_accounts=login_accounts,
-                                           message='Transfer successful')
+                return render_template('transfer.html', login_accounts=login_accounts,
+                                       message='Transfer successful')
             except Exception as e:
                 print(e)
                 return render_template('transfer.html', login_accounts=login_accounts,
@@ -120,6 +120,13 @@ def transfer_history():
         return redirect(url_for('home'))
     else:
         transfers = contract.functions.getTransfers().call()
+        flag = 0
+        for i in transfers:
+            if i[1] == view_account() or i[2] == view_account():
+                flag += 1
+        if not flag:
+            message = 'There are no transfers'
+            return render_template('transfer_history.html', message=message)
         if request.method == 'POST':
             try:
                 contract.functions.getTotransfer(int(request.form.get('transfer_id'))).transact(

@@ -5,7 +5,7 @@ w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
 
 accounts = w3.eth.accounts
 
-contract_address = '0x3cc0355721D6b9A38F3d20B7a89425aa7CdC9Acc'
+contract_address = '0xA75d3F25af15274eC57C871DB48E2520A0Ad9379'
 
 contract_abi = [
     {

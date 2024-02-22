@@ -2,18 +2,40 @@
     box-sizing: border-box;
 }
 
+.container{
+    display: flex;
+    padding:10px;
+    flex-direction: column;
+    gap:50px;
+}
+header{
+    display:flex;
+    justify-content: space-between;
+}
+
 .nft{
     border:2px solid black;
-    padding: 20px;
     border-radius: 20px;
-    width: 250px;
+    width: 400px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 15px;
 
 }
 
 img{
-    border-radius: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+hr{
+    /*margin-left: 30rem;*/
+    /*margin-right: 30rem;*/
+}
+
+#sell{
+    margin-bottom: 15px;
+    width: 150px;
 }

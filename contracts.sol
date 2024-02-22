@@ -2,23 +2,52 @@
 pragma solidity >=0.7.4 ;
 
 import {ERC20}  from "./ERC20.sol";
+import {ERC1155}  from "./ERC1155.sol";
 
 contract app {
+
+    myToken public Token;
+    MyNFT public NFT;
+
+    address myContract = address(this);
 
     struct User{
         string name;
         string password;
     }
+    struct Transfer{
+        uint id;
+        address sender;
+        address recipient;
+        uint sum;
+        bool status;
+        string currency;
+    }
+    struct Nft{
+        address owner;
+        uint id;
+        string name;
+        string picture;
+        uint amount;
+        // string data;
+    }
+    // struct NftCollection{
+    //     uint id;
+    // }
 
+    Nft[] public arrayNft;
     address[] public accounts;
+    Transfer[] public transfers;
+
+
     mapping (address => User) public users;
-    myToken public Token;
-    address myContract = address(this);
 
     constructor(){
         Token = new myToken (myContract, 100000);
+        NFT = new MyNFT();
     }
 
+    // Creating functions registration
 
     function signup(string memory _name, string memory _password) public {
         for(uint i = 0; i < accounts.length; i++){
@@ -42,17 +71,7 @@ contract app {
         return users[_account].name;
     }
 
-
-    struct Transfer{
-        uint id;
-        address sender;
-        address recipient;
-        uint sum;
-        bool status;
-        string currency;
-    }
-
-    Transfer[] public transfers;
+    // Creating functions transaction
 
     function sendToTransfer (address _recipient) public payable {
         require(msg.value > 0, "Not money");
@@ -72,6 +91,8 @@ contract app {
         transfers[_id].status = true;
     }
 
+    // Creating functions mytoken
+
     function getBalanceToken() public view returns (uint){
         return Token.balanceOf(msg.sender);
     }
@@ -85,6 +106,20 @@ contract app {
         return Token.balanceOf(myContract);
     }
 
+    //Creting functions NFT
+
+    function createNft (string memory _name, string memory _picture, uint _amount, string memory _data) public {
+        NFT.mint(msg.sender, arrayNft.length, _amount, _data);
+        arrayNft.push(Nft(msg.sender, arrayNft.length, _name, _picture, _amount));
+    }
+
+    function getBalanceNft(uint _id) public view returns(uint){
+        return NFT.balanceOf(msg.sender, _id);
+    }
+
+    function getArrayNFT() public view returns(Nft[] memory){
+        return arrayNft;
+    }
 }
 
 contract myToken is ERC20("Faer", "FR"){
@@ -97,3 +132,11 @@ contract myToken is ERC20("Faer", "FR"){
     }
 }
 
+contract MyNFT is ERC1155(""){
+    function mint(address _owner, uint _id, uint _value, string memory _data) public {
+        _mint(_owner, _id, _value, bytes(_data));
+    }
+    function transferNft(address _sender, address _to, uint _id, uint _amount, string memory _data) public {
+        safeTransferFrom(_sender, _to, _id, _amount, bytes(_data));
+    }
+}

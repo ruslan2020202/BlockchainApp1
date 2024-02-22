@@ -77,8 +77,10 @@ def signed():
         balance = w3.from_wei((w3.eth.get_balance(balance_checkSum)), 'ether')
         balance_view = f'{balance} Ether'
         balance_token = contract.functions.getBalanceToken().call({'from': user})
+        NFT_list = contract.functions.getArrayNFT().call()
+        # [('0xeC5c22233B644f70BD567014d8473cB7B229d03C', 0, 'GOLD', 'monkey0.png', 3)]
         return render_template('signed.html', user=user, name=name, balance_view=balance_view,
-                               balance_token=balance_token)
+                               balance_token=balance_token, NFT_list=NFT_list)
 
 
 @app.route('/logout')

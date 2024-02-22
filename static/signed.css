@@ -1,0 +1,19 @@
+* {
+    box-sizing: border-box;
+}
+
+.nft{
+    border:2px solid black;
+    padding: 20px;
+    border-radius: 20px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+img{
+    border-radius: 20px;
+}

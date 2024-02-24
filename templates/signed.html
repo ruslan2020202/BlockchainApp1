@@ -22,12 +22,22 @@
             </a>
         </div>
         <div class="buttons-menu">
-            <a href="{{ url_for("transfer_history") }}">
-                <button class="btn btn-primary" type="submit">History Transfers</button>
-            </a>
-            <a href="{{ url_for("transfer") }}">
-                <button class="btn btn-primary" type="submit">Transfer</button>
-            </a>
+            {#            <a href="{{ url_for("transfer_history") }}">#}
+            {#                <button class="btn btn-primary" type="submit">History Transfers</button>#}
+            {#            </a>#}
+            {#            <a href="{{ url_for("transfer") }}">#}
+            {#                <button class="btn btn-primary" type="submit">Transfer</button>#}
+            {#            </a>#}
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Transaction
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{{ url_for("transfer_history") }}">History Transfers</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for("transfer") }}">Transfer</a></li>
+                </ul>
+            </div>
 
         </div>
     </header>
@@ -49,8 +59,35 @@
             <img src="{{ url_for('static',filename=nft[3]) }}" alt="nft" height="200" width="400">
             <h3>{{ nft[2] }}</h3>
             <p>Количество: {{ nft[-1] }}</p>
-            <button class="btn btn-success" id="sell">Sell</button>
+            <button class="btn btn-success" id="sell" type="button" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">Sell
+            </button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-dialog-center">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">NFT</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Закрыть"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="nft" id="{{ nft[1] }}">
+                                <img src="{{ url_for('static',filename=nft[3]) }}" alt="nft" height="200" width="400">
+                                <h3>{{ nft[2] }}</h3>
+                                <p>Количество: {{ nft[-1] }}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-success" id="sell">Sell
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+
     {% endfor %}
 </div>
 </body>

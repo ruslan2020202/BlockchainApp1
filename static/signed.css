@@ -39,3 +39,14 @@ hr{
     margin-bottom: 15px;
     width: 150px;
 }
+
+.modal-body{
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    gap:15px;
+}
+
+.modal-title{
+    margin-left:45%;
+}

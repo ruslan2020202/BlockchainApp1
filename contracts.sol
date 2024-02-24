@@ -29,6 +29,9 @@ contract app {
         string name;
         string picture;
         uint amount;
+        bool inAuction;
+        bool inCollection;
+        //
         // string data;
     }
     // struct NftCollection{
@@ -41,6 +44,7 @@ contract app {
 
 
     mapping (address => User) public users;
+    mapping (address => mapping (uint => Nft)) public nftSender;
 
     constructor(){
         Token = new myToken (myContract, 100000);
@@ -110,7 +114,8 @@ contract app {
 
     function createNft (string memory _name, string memory _picture, uint _amount, string memory _data) public {
         NFT.mint(msg.sender, arrayNft.length, _amount, _data);
-        arrayNft.push(Nft(msg.sender, arrayNft.length, _name, _picture, _amount));
+        nftSender[msg.sender][arrayNft.length] = Nft(msg.sender, arrayNft.length, _name, _picture, _amount, false, false);
+        arrayNft.push(Nft(msg.sender, arrayNft.length, _name, _picture, _amount, false, false));
     }
 
     function getBalanceNft(uint _id) public view returns(uint){
@@ -120,6 +125,15 @@ contract app {
     function getArrayNFT() public view returns(Nft[] memory){
         return arrayNft;
     }
+
+    function sendInAuction(uint _id, uint _amount, string memory _data) public{
+        require(getBalanceNft(_id) >= _amount, "not enough tokens");
+        require(_amount > 0, "It is impossible to issue 0 tokens");
+        NFT.transferNft(msg.sender, myContract, _id, _amount, _data);
+        nftSender[msg.sender][_id].inAuction == true;
+    }
+
+
 }
 
 contract myToken is ERC20("Faer", "FR"){

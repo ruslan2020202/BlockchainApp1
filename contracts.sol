@@ -31,7 +31,6 @@ contract app {
         uint amount;
         bool inAuction;
         bool inCollection;
-        //
         // string data;
     }
     // struct NftCollection{

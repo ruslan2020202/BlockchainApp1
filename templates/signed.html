@@ -32,6 +32,17 @@
                     <li><a class="dropdown-item" href="{{ url_for("transfer") }}">Transfer</a></li>
                 </ul>
             </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    NFT
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{{ url_for("create_nft") }}">Create NFT</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for("my_nft") }}">My NFT</a></li>
+                    <li><a class="dropdown-item" href="#">My Collection</a></li>
+                </ul>
+            </div>
 
         </div>
     </header>
@@ -48,52 +59,9 @@
     </div>
     <div class="button_intrading">
         <a href="{{ url_for("trading_platform") }}">
-            <button class="btn btn-primary" type="submit">Торговая площадка</button>
+            <button class="btn btn-warning" type="submit">Торговая площадка</button>
         </a>
     </div>
-
-    <hr>
-    <h2 class="text-center">Мои NFT</h2>
-    {% for nft in NFT_list if nft[0]==user %}
-        <div class="nft" id="{{ nft[1] }}">
-            <img src="{{ url_for('static',filename=nft[3]) }}" alt="nft" height="200" width="400">
-            <h3>{{ nft[2] }}</h3>
-            <p>Количество: {{ nft[4] }}</p>
-            {% if nft[5]== False %}
-                <p class="inf-in-card">Не находится на аукционе</p>
-                <button class="btn btn-success" id="sell" type="button" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">Sell
-                </button>
-            {% elif nft[5]== True %}
-                <p>На аукционе</p>
-            {% endif %}
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog modal-dialog-center">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">NFT</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Закрыть"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="nft" id="{{ nft[1] }}">
-                                <img src="{{ url_for('static',filename=nft[3]) }}" alt="nft" height="200" width="400">
-                                <h3>{{ nft[2] }}</h3>
-                                <p>Количество: {{ nft[-1] }}</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-success" id="sell">Sell
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-    {% endfor %}
 </div>
 </body>
 </html>

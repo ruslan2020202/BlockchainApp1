@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static',filename='mynft.css') }}">
+    <title>My NFT</title>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <a href="{{ url_for("signed") }}"><button type="button" class="btn btn-outline-primary">Назад</button></a>
+        <h1 class="header-text">Мои NFT</h1>
+    </header>
+    <div class="nft-contanier">
+        {% for nft in NFT_list if nft[0]==user %}
+            <div class="nft" id="{{ nft[1] }}">
+                <img src="{{ url_for('static',filename=nft[3]) }}" alt="nft" height="200" width="400">
+                <h3>{{ nft[2] }}</h3>
+                <p>Количество: {{ nft[4] }}</p>
+                {% if nft[5]== False %}
+                    <p class="inf-in-card">Не находится на аукционе</p>
+                    <button class="btn btn-success" id="sell" type="button" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">Sell
+                    </button>
+                {% elif nft[5]== True %}
+                    <p>На аукционе</p>
+                {% endif %}
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-center">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">NFT</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Закрыть"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="nft" id="{{ nft[1] }}">
+                                    <img src="{{ url_for('static',filename=nft[3]) }}" alt="nft" height="200"
+                                         width="400">
+                                    <h3>{{ nft[2] }}</h3>
+                                    <p>Количество: {{ nft[4] }}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-success" id="sell">Sell
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>

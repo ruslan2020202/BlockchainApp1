@@ -1,0 +1,58 @@
+.nft {
+    border: 2px solid black;
+    border-radius: 20px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+
+}
+
+img {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+hr {
+    /*margin-left: 30rem;*/
+    /*margin-right: 30rem;*/
+}
+
+#sell {
+    margin-bottom: 15px;
+    width: 150px;
+}
+
+.modal-body {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.modal-title {
+    margin-left: 45%;
+}
+
+.inf-in-card {
+    opacity: 75%;
+    color: rgb(128, 128, 128);
+}
+
+header{
+    display: flex;
+    height: 15vh;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5rem;
+}
+
+.header-text{
+    margin-right: 45%;
+}
+
+.btn-outline-primary{
+    width: 7rem;
+}

@@ -2,66 +2,31 @@
     box-sizing: border-box;
 }
 
-.container{
+.container {
     display: flex;
-    padding:10px;
-    flex-direction: column;
-    gap:50px;
-}
-header{
-    display:flex;
-    justify-content: space-between;
-}
-
-.nft{
-    border:2px solid black;
-    border-radius: 20px;
-    width: 400px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-
-}
-
-img{
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-}
-
-hr{
-    /*margin-left: 30rem;*/
-    /*margin-right: 30rem;*/
-}
-
-#sell{
-    margin-bottom: 15px;
-    width: 150px;
-}
-
-.modal-body{
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    gap:15px;
-}
-.profile{
-    display: flex;
+    padding: 10px;
     flex-direction: column;
     gap: 5rem;
 }
 
-.modal-title{
-    margin-left:45%;
+header {
+    display: flex;
+    justify-content: space-between;
 }
 
-.button_intrading{
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    gap: 7rem;
+}
+
+
+.button_intrading {
     display: flex;
     justify-content: center;
 }
 
-.inf-in-card{
-    opacity: 75%;
-    color: rgb(128, 128, 128);
+.btn-warning{
+    width: 20rem;
 }

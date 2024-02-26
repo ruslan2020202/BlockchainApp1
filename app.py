@@ -77,11 +77,8 @@ def signed():
         balance = w3.from_wei((w3.eth.get_balance(balance_checkSum)), 'ether')
         balance_view = f'{balance} Ether'
         balance_token = contract.functions.getBalanceToken().call({'from': user})
-        NFT_list = contract.functions.getArrayNFT().call()
-        print(NFT_list)
-        # [('0xeC5c22233B644f70BD567014d8473cB7B229d03C', 0, 'GOLD', 'monkey0.png', 3, false, false)]
         return render_template('signed.html', user=user, name=name, balance_view=balance_view,
-                               balance_token=balance_token, NFT_list=NFT_list)
+                               balance_token=balance_token)
 
 
 @app.route('/logout')
@@ -144,7 +141,20 @@ def transfer_history():
 
 @app.route('/trading_platform', methods=['GET', 'POST'])
 def trading_platform():
-    return render_template('trading_platform.html')
+    NFT_list = contract.functions.getArrayNFT().call()
+    return render_template('trading_platform.html', Nft_list=NFT_list, user=view_account())
+
+
+@app.route('/create_nft, methods=["GET", "POST"])')
+def create_nft():
+    return render_template('create_nft.html')
+
+
+@app.route('/my_nft', methods=["GET", "POST"])
+def my_nft():
+    NFT_list = contract.functions.getArrayNFT().call()
+    # [('0xeC5c22233B644f70BD567014d8473cB7B229d03C', 0, 'GOLD', 'monkey0.png', 3, false, false)]
+    return render_template('myNFT.html', NFT_list=NFT_list, user=view_account())
 
 
 if __name__ == '__main__':

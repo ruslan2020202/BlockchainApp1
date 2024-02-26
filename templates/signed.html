@@ -22,12 +22,6 @@
             </a>
         </div>
         <div class="buttons-menu">
-            {#            <a href="{{ url_for("transfer_history") }}">#}
-            {#                <button class="btn btn-primary" type="submit">History Transfers</button>#}
-            {#            </a>#}
-            {#            <a href="{{ url_for("transfer") }}">#}
-            {#                <button class="btn btn-primary" type="submit">Transfer</button>#}
-            {#            </a>#}
             <div class="btn-group">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -45,23 +39,34 @@
     <div class="profile">
         <h1 class="text-center">Личный кабинет</h1>
         <div class="information">
-            <p><label for="account">Account: {{ user }}</label></p>
-            <p><label for="name">Name: {{ name }}</label></p>
-            <p><label for="balance">Balance(ETH): {{ balance_view }}</label></p>
-            <p><label for="balance_token">Balance(FR): {{ balance_token }} FR</label></p>
-
+            <p><label for="account"><b>Account</b>: {{ user }}</label></p>
+            <p><label for="name"><b>Name</b>: {{ name }}</label></p>
+            <p><label for="balance"><b>Balance(ETH)</b>: {{ balance_view }}</label></p>
+            <p><label for="balance_token"><b>Balance(FR)</b>: {{ balance_token }} FR</label></p>
         </div>
+
     </div>
+    <div class="button_intrading">
+        <a href="{{ url_for("trading_platform") }}">
+            <button class="btn btn-primary" type="submit">Торговая площадка</button>
+        </a>
+    </div>
+
     <hr>
     <h2 class="text-center">Мои NFT</h2>
     {% for nft in NFT_list if nft[0]==user %}
         <div class="nft" id="{{ nft[1] }}">
             <img src="{{ url_for('static',filename=nft[3]) }}" alt="nft" height="200" width="400">
             <h3>{{ nft[2] }}</h3>
-            <p>Количество: {{ nft[-1] }}</p>
-            <button class="btn btn-success" id="sell" type="button" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal">Sell
-            </button>
+            <p>Количество: {{ nft[4] }}</p>
+            {% if nft[5]== False %}
+                <p class="inf-in-card">Не находится на аукционе</p>
+                <button class="btn btn-success" id="sell" type="button" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">Sell
+                </button>
+            {% elif nft[5]== True %}
+                <p>На аукционе</p>
+            {% endif %}
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                  aria-hidden="true">
                 <div class="modal-dialog modal-dialog-center">

@@ -78,6 +78,7 @@ def signed():
         balance_view = f'{balance} Ether'
         balance_token = contract.functions.getBalanceToken().call({'from': user})
         NFT_list = contract.functions.getArrayNFT().call()
+        print(NFT_list)
         # [('0xeC5c22233B644f70BD567014d8473cB7B229d03C', 0, 'GOLD', 'monkey0.png', 3, false, false)]
         return render_template('signed.html', user=user, name=name, balance_view=balance_view,
                                balance_token=balance_token, NFT_list=NFT_list)
@@ -139,6 +140,11 @@ def transfer_history():
                 return render_template('transfer_history.html', transfers=transfers,
                                        message='Transfer failed', user=view_account())
         return render_template('transfer_history.html', transfers=transfers, user=view_account())
+
+
+@app.route('/trading_platform', methods=['GET', 'POST'])
+def trading_platform():
+    return render_template('trading_platform.html')
 
 
 if __name__ == '__main__':

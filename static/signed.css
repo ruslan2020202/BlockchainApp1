@@ -46,7 +46,22 @@ hr{
     align-items: center;
     gap:15px;
 }
+.profile{
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+}
 
 .modal-title{
     margin-left:45%;
+}
+
+.button_intrading{
+    display: flex;
+    justify-content: center;
+}
+
+.inf-in-card{
+    opacity: 75%;
+    color: rgb(128, 128, 128);
 }

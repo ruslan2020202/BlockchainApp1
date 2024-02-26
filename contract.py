@@ -5,7 +5,7 @@ w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
 
 accounts = w3.eth.accounts
 
-contract_address = '0x73d525D7b3b1C5aFa360b67cfc91d7DaBF8657CB'
+contract_address = '0x6aC56EeD1269bE6ec4ff0df2909Ff0DAa349f586'
 
 contract_abi = [
     {
@@ -47,6 +47,29 @@ contract_abi = [
         "name": "getTotransfer",
         "outputs": [],
         "stateMutability": "payable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_id",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_amount",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "_data",
+                "type": "string"
+            }
+        ],
+        "name": "sendInAuction",
+        "outputs": [],
+        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
@@ -156,6 +179,16 @@ contract_abi = [
                 "internalType": "uint256",
                 "name": "amount",
                 "type": "uint256"
+            },
+            {
+                "internalType": "bool",
+                "name": "inAuction",
+                "type": "bool"
+            },
+            {
+                "internalType": "bool",
+                "name": "inCollection",
+                "type": "bool"
             }
         ],
         "stateMutability": "view",
@@ -204,6 +237,16 @@ contract_abi = [
                         "internalType": "uint256",
                         "name": "amount",
                         "type": "uint256"
+                    },
+                    {
+                        "internalType": "bool",
+                        "name": "inAuction",
+                        "type": "bool"
+                    },
+                    {
+                        "internalType": "bool",
+                        "name": "inCollection",
+                        "type": "bool"
                     }
                 ],
                 "internalType": "struct app.Nft[]",

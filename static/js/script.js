@@ -8,16 +8,19 @@ file.addEventListener('change', function () {
         if (imgIn) {
             fromty.removeChild(imgIn)
         }
-    }catch (err){
-       fromty.removeChild(imgIn)
+    } catch (err) {
+        fromty.removeChild(imgIn)
     }
-    let img = document.createElement("img")
-    let imgdata = file.value.split('\\')
-    img.src = `static/${imgdata[2]}`
-    img.width = 300
-    img.height = 200
-    img.setAttribute('name', 'imageName')
-    fromty.appendChild(img)
+    if (file.value !== '') {
+        let img = document.createElement("img")
+        let imgdata = file.value.split('\\')
+        img.src = `static/${imgdata[2]}`
+        img.width = 300
+        img.height = 200
+        img.setAttribute('name', 'imageName')
+        fromty.appendChild(img)
+    }
+
 })
 
 // let range = document.querySelector('#formRange')

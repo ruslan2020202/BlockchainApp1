@@ -161,6 +161,11 @@ def create_nft():
 def my_nft():
     NFT_list = contract.functions.getArrayNFT().call()
     # [('0xeC5c22233B644f70BD567014d8473cB7B229d03C', 0, 'GOLD', 'monkey0.png', 3, false, false)]
+    if request.method == 'POST':
+        amount = int(request.form.get('amount'))
+        price = int(request.form.get('price'))
+        nft_id = int(request.form.get('nft_id'))
+
     return render_template('myNFT.html', NFT_list=NFT_list, user=view_account())
 
 

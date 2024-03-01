@@ -9,7 +9,7 @@ contract app {
     myToken public Token;
     MyNFT public NFT;
 
-    address myContract = address(this);
+    address public myContract = address(this);
 
     struct User{
         string name;
@@ -31,15 +31,27 @@ contract app {
         uint amount;
         bool inAuction;
         bool inCollection;
+        //
         // string data;
     }
     // struct NftCollection{
     //     uint id;
     // }
 
+    struct nftTransfer{
+        uint id;
+        uint idNft;
+        address owner;
+        uint amount;
+        uint price;
+        bool status;
+    }
+
     Nft[] public arrayNft;
+    nftTransfer[] public nftTransfers;
     address[] public accounts;
     Transfer[] public transfers;
+
 
 
     mapping (address => User) public users;
@@ -48,6 +60,8 @@ contract app {
     constructor(){
         Token = new myToken (myContract, 100000);
         NFT = new MyNFT();
+        signup("ruslan", "123");
+        createNft("m0nkeyNFT", "monkey0.png", 5);
     }
 
     // Creating functions registration
@@ -111,9 +125,8 @@ contract app {
 
     //Creting functions NFT
 
-    function createNft (string memory _name, string memory _picture, uint _amount, string memory _data) public {
-        NFT.mint(msg.sender, arrayNft.length, _amount, _data);
-        // nftSender[msg.sender][arrayNft.length] = Nft(msg.sender, arrayNft.length, _name, _picture, _amount, false, false);
+    function createNft (string memory _name, string memory _picture, uint _amount) public {
+        NFT.mint(msg.sender, arrayNft.length, _amount);
         arrayNft.push(Nft(msg.sender, arrayNft.length, _name, _picture, _amount, false, false));
     }
 
@@ -125,11 +138,24 @@ contract app {
         return arrayNft;
     }
 
-    function sendInAuction(uint _id, uint _amount, string memory _data) public{
-        // require(getBalanceNft(_id) >= _amount, "not enough tokens");
-        // require(_amount > 0, "It is impossible to issue 0 tokens");
-        NFT.transferNft(msg.sender, myContract, _id, _amount, _data);
+
+    function sendInAuction(uint _id, uint _amount, uint _price) public{
+        require(getBalanceNft(_id) >= _amount, "not enough tokens");
+        require(_amount > 0, "It is impossible to issue 0 tokens");
         arrayNft[_id].inAuction = true;
+        nftTransfers.push(nftTransfer(nftTransfers.length, _id, msg.sender, _amount, _price, true));
+    }
+
+    function buyNftInAuction(uint _id) public {
+        require(_id < nftTransfers.length, "there is no such transfer" );
+        require(nftTransfers[_id].owner != msg.sender, "you can't buy your own nft");
+        require(nftTransfers[_id].status == true, "there is no such transfer");
+        require(getBalanceToken() >= nftTransfers[_id].amount, "not enough funds to buy");
+        sendTransferToken(nftTransfers[_id].owner, nftTransfers[_id].amount);
+        NFT.transferNft(nftTransfers[_id].owner, msg.sender, nftTransfers[_id].idNft, nftTransfers[_id].price);
+        nftTransfers[_id].status = false;
+        arrayNft[nftTransfers[_id].idNft].inAuction = false;
+        arrayNft[nftTransfers[_id].idNft].amount = getBalanceNft(nftTransfers[_id].idNft);
     }
 
 
@@ -146,10 +172,10 @@ contract myToken is ERC20("Faer", "FR"){
 }
 
 contract MyNFT is ERC1155(""){
-    function mint(address _owner, uint _id, uint _value, string memory _data) public {
-        _mint(_owner, _id, _value, bytes(_data));
+    function mint(address _owner, uint _id, uint _value) public {
+        _mint(_owner, _id, _value, "");
     }
-    function transferNft(address _sender, address _to, uint _id, uint _amount, string memory _data) public {
-        safeTransferFrom(_sender, _to, _id, _amount, bytes(_data));
+    function transferNft(address _sender, address _to, uint _id, uint _amount) public {
+        _safeTransferFrom(_sender, _to, _id, _amount, "");
     }
 }

@@ -5,9 +5,22 @@ w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
 
 accounts = w3.eth.accounts
 
-contract_address = '0x0a8fa4D6703e9992655EA380f92C325128D5AD99'
+contract_address = '0x993b11EA1DA368468FD043156bB43253d515AC7c'
 
 contract_abi = [
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_id",
+                "type": "uint256"
+            }
+        ],
+        "name": "buyNftInAuction",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
     {
         "inputs": [
             {
@@ -54,6 +67,11 @@ contract_abi = [
             {
                 "internalType": "uint256",
                 "name": "_amount",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_price",
                 "type": "uint256"
             }
         ],
@@ -179,19 +197,6 @@ contract_abi = [
                 "internalType": "bool",
                 "name": "inCollection",
                 "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "C0ntractNFT",
-        "outputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
             }
         ],
         "stateMutability": "view",
@@ -326,6 +331,51 @@ contract_abi = [
     },
     {
         "inputs": [],
+        "name": "getNftTransfers",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "uint256",
+                        "name": "id",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "idNft",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "owner",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "amount",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "price",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "bool",
+                        "name": "status",
+                        "type": "bool"
+                    }
+                ],
+                "internalType": "struct app.nftTransfer[]",
+                "name": "",
+                "type": "tuple[]"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
         "name": "getTransfers",
         "outputs": [
             {
@@ -408,6 +458,50 @@ contract_abi = [
                 "internalType": "contract MyNFT",
                 "name": "",
                 "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "nftTransfers",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "id",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "idNft",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "owner",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "price",
+                "type": "uint256"
+            },
+            {
+                "internalType": "bool",
+                "name": "status",
+                "type": "bool"
             }
         ],
         "stateMutability": "view",

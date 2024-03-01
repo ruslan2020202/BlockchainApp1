@@ -29,12 +29,12 @@
                 {% if nft[5]== False %}
                     <p class="inf-in-card">Не находится на аукционе</p>
                     <button class="btn btn-success" id="sell" type="button" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal">Sell
+                            data-bs-target="#exampleModal{{ nft[1] }}">Sell
                     </button>
                 {% elif nft[5]== True %}
                     <p>На аукционе</p>
                 {% endif %}
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                <div class="modal fade" id="exampleModal{{ nft[1] }}" tabindex="-1" aria-labelledby="exampleModalLabel"
                      aria-hidden="true">
                     <div class="modal-dialog modal-dialog-center">
                         <div class="modal-content">

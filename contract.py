@@ -5,7 +5,7 @@ w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
 
 accounts = w3.eth.accounts
 
-contract_address = '0x6aC56EeD1269bE6ec4ff0df2909Ff0DAa349f586'
+contract_address = '0x0a8fa4D6703e9992655EA380f92C325128D5AD99'
 
 contract_abi = [
     {
@@ -24,11 +24,6 @@ contract_abi = [
                 "internalType": "uint256",
                 "name": "_amount",
                 "type": "uint256"
-            },
-            {
-                "internalType": "string",
-                "name": "_data",
-                "type": "string"
             }
         ],
         "name": "createNft",
@@ -60,11 +55,6 @@ contract_abi = [
                 "internalType": "uint256",
                 "name": "_amount",
                 "type": "uint256"
-            },
-            {
-                "internalType": "string",
-                "name": "_data",
-                "type": "string"
             }
         ],
         "name": "sendInAuction",
@@ -189,6 +179,19 @@ contract_abi = [
                 "internalType": "bool",
                 "name": "inCollection",
                 "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "C0ntractNFT",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
             }
         ],
         "stateMutability": "view",
@@ -381,6 +384,19 @@ contract_abi = [
         ],
         "name": "login",
         "outputs": [],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "myContract",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
         "stateMutability": "view",
         "type": "function"
     },

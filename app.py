@@ -145,8 +145,15 @@ def trading_platform():
     return render_template('trading_platform.html', Nft_list=NFT_list, user=view_account())
 
 
-@app.route('/create_nft, methods=["GET", "POST"])')
+@app.route('/create_nft', methods=["GET", "POST"])
 def create_nft():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        picture = request.form.get('image')
+        print(picture)
+        amount = int(request.form.get('amount'))
+        contract.functions.createNft(name, picture, amount).transact({'from': view_account()})
+        return redirect(url_for('signed'))
     return render_template('create_nft.html')
 
 

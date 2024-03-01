@@ -1,5 +1,5 @@
 .nft {
-    border: 2px solid black;
+    border: 5px solid black;
     border-radius: 20px;
     width: 400px;
     display: flex;
@@ -7,12 +7,8 @@
     justify-content: center;
     align-items: center;
     gap: 15px;
+    box-sizing: content-box;
 
-}
-
-img {
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
 }
 
 hr {
@@ -41,7 +37,7 @@ hr {
     color: rgb(128, 128, 128);
 }
 
-header{
+header {
     display: flex;
     height: 15vh;
     align-items: center;
@@ -49,10 +45,23 @@ header{
     margin-bottom: 5rem;
 }
 
-.header-text{
+.header-text {
     margin-right: 45%;
 }
 
-.btn-outline-primary{
+.btn-outline-primary {
     width: 7rem;
+}
+
+.nft-contanier {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 10rem;
+    margin-bottom: 3rem;
+}
+
+img{
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
 }

@@ -1,0 +1,32 @@
+header {
+    display: flex;
+    height: 15vh;
+    align-items: center;
+    margin-bottom: 5rem;
+    gap: 27rem;
+}
+
+.input-nft {
+    display: flex;
+    flex-direction: column;
+    width: 20rem;
+}
+
+.create-nft {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+#input-image {
+    gap: 3rem;
+    align-items: center;
+}
+.btn{
+    width: 7rem;
+}
+img {
+    border-radius: 20px;
+}

@@ -20,12 +20,12 @@
         <a href="{{ url_for("signed") }}">
             <button type="button" class="btn btn-outline-primary">Назад</button>
         </a>
-        <h1 class="header-text">Мои NFT</h1>
+        <h1 class="header-text text-center">Мои NFT</h1>
     </header>
     <div class="nft-contanier">
         {% for nft in NFT_list if nft[0]==user %}
             <div class="nft" id="{{ nft[1] }}">
-                <img src="{{ url_for('static',filename=nft[3]) }}" alt="nft" height="200" width="400">
+                <img src="{{ url_for('static',filename='image/%s'|format(nft[3]))}}" alt="nft" height="200" width="400">
                 <h3>{{ nft[2] }}</h3>
                 <p>Количество: {{ nft[4] }}</p>
                 {% if nft[5]== False %}
@@ -34,7 +34,7 @@
                             data-bs-target="#exampleModal{{ nft[1] }}">Sell
                     </button>
                 {% elif nft[5]== True %}
-                    <p>На аукционе</p>
+                    <p class="inf-in-card">На аукционе</p>
                     <button class="btn btn-success disabled" id="sell" type="button">Sell
                     </button>
                 {% endif %}
@@ -58,10 +58,10 @@
                                             <input class="form-control" type="number" name="amount" id="formAmount"
                                                    placeholder="Количество" min="1" max="{{ nft[4] }}" required>
                                             <div class="input-group">
-                                                <span class="input-group-text">$</span>
                                                 <input type="text" class="form-control"
                                                        aria-label="Amount (to the nearest dollar)"
-                                                       placeholder="price" name="price">
+                                                       placeholder="Цена" name="price">
+                                                <span class="input-group-text">FR</span>
                                             </div>
                                         </div>
                                     </div>

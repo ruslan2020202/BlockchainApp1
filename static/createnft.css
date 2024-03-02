@@ -2,8 +2,6 @@ header {
     display: flex;
     height: 15vh;
     align-items: center;
-    margin-bottom: 5rem;
-    gap: 27rem;
 }
 
 .input-nft {
@@ -15,9 +13,10 @@ header {
 .create-nft {
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: 2rem;
     align-items: center;
     margin-bottom: 3rem;
+    width: 30rem;
 }
 
 #input-image {
@@ -29,4 +28,9 @@ header {
 }
 img {
     border-radius: 20px;
+}
+
+.create-container{
+    display: flex;
+    justify-content: center;
 }

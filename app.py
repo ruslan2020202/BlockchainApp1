@@ -149,10 +149,9 @@ def trading_platform():
 def create_nft():
     if request.method == 'POST':
         name = request.form.get('name')
-        picture = request.form.get('image')
-        print(picture)
+        picture = request.files.get('image')
         amount = int(request.form.get('amount'))
-        contract.functions.createNft(name, picture, amount).transact({'from': view_account()})
+        contract.functions.createNft(name, picture.name, amount).transact({'from': view_account()})
         return redirect(url_for('signed'))
     return render_template('create_nft.html')
 
@@ -165,7 +164,8 @@ def my_nft():
         amount = int(request.form.get('amount'))
         price = int(request.form.get('price'))
         nft_id = int(request.form.get('nft_id'))
-
+        contract.functions.sendInAuction(nft_id, amount, price).transact({'from': view_account()})
+        return redirect('my_nft')
     return render_template('myNFT.html', NFT_list=NFT_list, user=view_account())
 
 

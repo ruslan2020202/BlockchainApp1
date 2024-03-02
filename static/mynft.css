@@ -11,10 +11,6 @@
 
 }
 
-hr {
-    /*margin-left: 30rem;*/
-    /*margin-right: 30rem;*/
-}
 
 #sell {
     margin-bottom: 15px;
@@ -46,7 +42,7 @@ header {
 }
 
 .header-text {
-    margin-right: 45%;
+    padding-right: 6rem;
 }
 
 .btn-outline-primary {

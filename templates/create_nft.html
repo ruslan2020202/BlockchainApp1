@@ -23,31 +23,34 @@
                 <button type="button" class="btn btn-outline-primary">Назад</button>
             </a>
         </div>
-        <h1 class="header-text">Create NFT</h1>
     </header>
-    <form action="{{ url_for('create_nft') }}" method="post" class="create-nft">
-        <div class="input-nft" id="input-image">
-            <div>
-                <label for="formFile" class="form-label">Выберите картинку:</label>
-                <input class="form-control" name='image' type="file" id="formFile" accept="image/jpeg, image/png"
+    <div class="create-container">
+        <form action="{{ url_for('create_nft') }}" method="post" class="create-nft">
+            <h1 class="header-text text-center">Create NFT</h1>
+            <div class="input-nft" id="input-image">
+                <div>
+                    <label for="formFile" class="form-label">Выберите картинку:</label>
+                    <input class="form-control" name='image' type="file" id="formFile" accept="image/jpeg, image/png"
+                           required>
+                </div>
+            </div>
+
+            <script src="{{ url_for('static', filename='js/script.js') }}" defer>
+            </script>
+            <div class="input-nft">
+                <label for="formName" class="form-label">Введите название NFT:</label>
+                <input class="form-control" type="text" name="name" id="formName" placeholder="Название NFT" required>
+            </div>
+            <div class="input-nft">
+                <label for="formRange" class="form-label" id="rangeId">Количество: 0</label>
+                <input class="form-range" type="range" name="amount" id="formRange" placeholder="Название NFT" min="1"
+                       max="10"
                        required>
             </div>
-        </div>
 
-        <script src="{{ url_for('static', filename='js/script.js') }}" defer>
-        </script>
-        <div class="input-nft">
-            <label for="formName" class="form-label">Введите название NFT:</label>
-            <input class="form-control" type="text" name="name" id="formName" placeholder="Название NFT" required>
-        </div>
-        <div class="input-nft">
-            <label for="formRange" class="form-label" id="rangeId">Количество: 0</label>
-            <input class="form-range" type="range" name="amount" id="formRange" placeholder="Название NFT" min="1" max="10"
-                   required>
-        </div>
-
-        <button class="btn btn-primary" type="submit">Create</button>
-    </form>
+            <button class="btn btn-primary" type="submit">Create</button>
+        </form>
+    </div>
 </div>
 </body>
 </html>

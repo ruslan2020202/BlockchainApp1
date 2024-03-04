@@ -50,7 +50,7 @@
                             <form action="{{ url_for("my_nft") }}" method="post">
                                 <div class="modal-body">
                                     <div class="nft-modal" id="{{ nft[1] }}">
-                                        <img src="{{ url_for('static',filename=nft[3]) }}" class="img-modal" alt="nft"
+                                        <img src="{{ url_for('static',filename='image/%s'|format(nft[3]))}}" class="img-modal" alt="nft"
                                              height="200"
                                              width="400">
                                         <h3>{{ nft[2] }}</h3>

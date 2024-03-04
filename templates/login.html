@@ -10,25 +10,36 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
             crossorigin="anonymous"></script>
-    {#    <link rel="stylesheet" href="{{ url_for('static',filename='signed.css') }}">#}
+    <link rel="stylesheet" href="{{ url_for('static',filename='login.css') }}">
     <title>Login</title>
 </head>
 <body>
-<div class="container"><h1>Sign In</h1>
-    {% if message %}
-        <p>{{ message }}</p>
-    {% endif %}
-    <form action="/login" method="post">
-        <label for="address">Account</label>
-        <select name="address" required>
-            {% for account in users_accounts %}
-                <option value="{{ account }}">{{ account }}</option>
-            {% endfor %}
-        </select><br><br>
-        <label for="password">Password:</label>
-        <input type=password name='password' placeholder="password" required>
-        <button class="btn btn-primary" type="submit">Login</button>
-    </form>
+<div class="container">
+    <div class="login">
+        <h1 class="text-center">Sign In</h1>
+        {% if message %}
+            <p>{{ message }}</p>
+        {% endif %}
+        <form action="/login" method="post" class="form-login">
+            <div class="form-login-in">
+                <div>
+                    <label for="address" class="form-label">Account</label>
+                    <select name="address" class="form-select" required>
+                        {% for account in users_accounts %}
+                            <option value="{{ account }}">{{ account }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label for="passwordId" class="form-label">Пароль</label>
+                    <input type='password' class="form-control" name='password' id="passwordId" placeholder="********"
+                           required>
+                </div>
+            </div>
+            <button class="btn btn-primary" type="submit">Login</button>
+        <p>Don't have an account? <a href="{{ url_for('signup') }}" class="link-primary">Sign Up</a></p>
+        </form>
+    </div>
 </div>
 
 </body>

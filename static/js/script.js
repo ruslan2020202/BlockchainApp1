@@ -1,6 +1,5 @@
 let file = document.getElementById('formFile')
 const fromty = document.querySelector("#input-image")
-let amount
 file.addEventListener('change', function () {
     let imgIn = document.querySelector("img")
     console.log(file.value)

@@ -15,6 +15,11 @@ def view_account():
     return account
 
 
+def check_account():
+    if view_account() is None:
+        return redirect(url_for('home'))
+
+
 @app.route('/')
 def home():
     if view_account() is not None:
@@ -141,12 +146,14 @@ def transfer_history():
 
 @app.route('/trading_platform', methods=['GET', 'POST'])
 def trading_platform():
+    check_account()
     NFT_list = contract.functions.getArrayNFT().call()
     return render_template('trading_platform.html', Nft_list=NFT_list, user=view_account())
 
 
 @app.route('/create_nft', methods=["GET", "POST"])
 def create_nft():
+    check_account()
     if request.method == 'POST':
         name = request.form.get('name')
         picture = request.files.get('image')
@@ -158,6 +165,7 @@ def create_nft():
 
 @app.route('/my_nft', methods=["GET", "POST"])
 def my_nft():
+    check_account()
     NFT_list = contract.functions.getArrayNFT().call()
     # [('0xeC5c22233B644f70BD567014d8473cB7B229d03C', 0, 'GOLD', 'monkey0.png', 3, false, false)]
     if request.method == 'POST':
@@ -167,6 +175,12 @@ def my_nft():
         contract.functions.sendInAuction(nft_id, amount, price).transact({'from': view_account()})
         return redirect('my_nft')
     return render_template('myNFT.html', NFT_list=NFT_list, user=view_account())
+
+
+@app.route('/my_collection', methods=["GET", "POST"])
+def collection():
+    check_account()
+    return render_template('collection.html')
 
 
 if __name__ == '__main__':

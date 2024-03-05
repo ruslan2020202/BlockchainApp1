@@ -13,7 +13,7 @@ file.addEventListener('change', function () {
     if (file.value !== '') {
         let img = document.createElement("img")
         let imgdata = file.value.split('\\')
-        img.src = `static/${imgdata[2]}`
+        img.src = `static/image/${imgdata[2]}`
         img.width = 300
         img.height = 200
         img.setAttribute('name', 'imageName')

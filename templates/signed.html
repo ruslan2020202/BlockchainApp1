@@ -11,40 +11,12 @@
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ url_for('static',filename='signed.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='menu.css') }}">
     <title>Личный кабинет</title>
 </head>
 <body>
 <div class="container">
-    <header>
-        {#        <div class="logout">#}
-        {#            <a href="{{ url_for('logout') }}">#}
-        {#                <button class="btn btn-primary" type="submit">Logout</button>#}
-        {#            </a>#}
-        {#        </div>#}
-        {#        <div class="buttons-menu">#}
-        {#            <div class="btn-group">#}
-        {#                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"#}
-        {#                        aria-expanded="false">#}
-        {#                    Transaction#}
-        {#                </button>#}
-        {#                <ul class="dropdown-menu">#}
-        {#                    <li><a class="dropdown-item" href="{{ url_for("transfer_history") }}">History Transfers</a></li>#}
-        {#                    <li><a class="dropdown-item" href="{{ url_for("transfer") }}">Transfer</a></li>#}
-        {#                </ul>#}
-        {#            </div>#}
-        {#            <div class="btn-group">#}
-        {#                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"#}
-        {#                        aria-expanded="false">#}
-        {#                    NFT#}
-        {#                </button>#}
-        {#                <ul class="dropdown-menu">#}
-        {#                    <li><a class="dropdown-item" href="{{ url_for("create_nft") }}">Create NFT</a></li>#}
-        {#                    <li><a class="dropdown-item" href="{{ url_for("my_nft") }}">My NFT</a></li>#}
-        {#                    <li><a class="dropdown-item" href="{{ url_for('collection') }}">My Collection</a></li>#}
-        {#                </ul>#}
-        {#            </div>#}
-        {##}
-        {#        </div>#}
+    <header class="navbar-fixed-top">
         <img src="{{ url_for('static', filename='image/nft_icon.png') }}" alt="" width="50" height="50">
 
         <a data-bs-toggle="offcanvas" href="#offcanvasWithBothOptions" role="button"

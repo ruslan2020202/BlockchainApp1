@@ -156,9 +156,9 @@ def create_nft():
     check_account()
     if request.method == 'POST':
         name = request.form.get('name')
-        picture = request.files.get('image')
+        picture = request.form.get('image')
         amount = int(request.form.get('amount'))
-        contract.functions.createNft(name, picture.name, amount).transact({'from': view_account()})
+        contract.functions.createNft(name, picture, amount).transact({'from': view_account()})
         return redirect(url_for('signed'))
     return render_template('create_nft.html')
 

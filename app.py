@@ -1,9 +1,13 @@
 from flask import Flask, render_template, request, url_for, redirect, session
 
+from datetime import datetime
 from contract import w3, contract, accounts
 
 app = Flask(__name__)
 app.secret_key = 'blockchain123'
+
+print(contract.functions.getArrayNFT().call())
+print(contract.functions.getNftTransfers().call())
 
 
 def add_account(address):

@@ -5,7 +5,7 @@ w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
 
 accounts = w3.eth.accounts
 
-contract_address = '0x993b11EA1DA368468FD043156bB43253d515AC7c'
+contract_address = '0x912606ff4ecc78b12C11D22E71Cd8658ae5A66b6'
 
 contract_abi = [
     {
@@ -14,9 +14,14 @@ contract_abi = [
                 "internalType": "uint256",
                 "name": "_id",
                 "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_time",
+                "type": "uint256"
             }
         ],
-        "name": "buyNftInAuction",
+        "name": "buyNft",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -66,12 +71,40 @@ contract_abi = [
             },
             {
                 "internalType": "uint256",
+                "name": "_bet",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_time",
+                "type": "uint256"
+            }
+        ],
+        "name": "placeBet",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_id",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
                 "name": "_amount",
                 "type": "uint256"
             },
             {
                 "internalType": "uint256",
                 "name": "_price",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_minutes",
                 "type": "uint256"
             }
         ],
@@ -107,6 +140,29 @@ contract_abi = [
             }
         ],
         "name": "sendTransferToken",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_owner",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "_recipient",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_value",
+                "type": "uint256"
+            }
+        ],
+        "name": "sendTransferTokenRecipient",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -298,6 +354,30 @@ contract_abi = [
         "type": "function"
     },
     {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_owner",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_id",
+                "type": "uint256"
+            }
+        ],
+        "name": "getbalanceNftOwner",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
         "inputs": [],
         "name": "getBalanceToken",
         "outputs": [
@@ -364,6 +444,26 @@ contract_abi = [
                         "internalType": "bool",
                         "name": "status",
                         "type": "bool"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "start",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "end",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "recipient",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "bid",
+                        "type": "uint256"
                     }
                 ],
                 "internalType": "struct app.nftTransfer[]",
@@ -502,6 +602,26 @@ contract_abi = [
                 "internalType": "bool",
                 "name": "status",
                 "type": "bool"
+            },
+            {
+                "internalType": "uint256",
+                "name": "start",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "end",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "recipient",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "bid",
+                "type": "uint256"
             }
         ],
         "stateMutability": "view",

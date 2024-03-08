@@ -1,3 +1,14 @@
+.container {
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+    gap: 5rem;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+}
+
 .btn-menu {
     width: 100%;
     text-align: left;

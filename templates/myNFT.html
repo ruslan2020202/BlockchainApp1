@@ -23,10 +23,11 @@
         <h1 class="header-text text-center">Мои NFT</h1>
 
     </header>
-    <div class="nft-contanier">
-        {% for nft in NFT_list if nft[0]==user %}
+    <div class="nft-container">
+        {% for nft in NFT_list if nft[0]==user and nft[4] != 0 %}
             <div class="nft" id="{{ nft[1] }}">
-                <img src="{{ url_for('static',filename='image/%s'|format(nft[3]))}}" alt="nft" height="200" width="400">
+                <img src="{{ url_for('static',filename='image/%s'|format(nft[3])) }}" alt="nft" height="200"
+                     width="400">
                 <h3>{{ nft[2] }}</h3>
                 <p>Количество: {{ nft[4] }}</p>
                 {% if nft[5]== False %}
@@ -51,7 +52,8 @@
                             <form action="{{ url_for("my_nft") }}" method="post">
                                 <div class="modal-body">
                                     <div class="nft-modal" id="{{ nft[1] }}">
-                                        <img src="{{ url_for('static',filename='image/%s'|format(nft[3]))}}" class="img-modal" alt="nft"
+                                        <img src="{{ url_for('static',filename='image/%s'|format(nft[3])) }}"
+                                             class="img-modal" alt="nft"
                                              height="200"
                                              width="300">
                                         <h3>{{ nft[2] }}</h3>
@@ -64,11 +66,24 @@
                                                        placeholder="Цена" name="price">
                                                 <span class="input-group-text">FR</span>
                                             </div>
+                                            <div class="btn-group" role="group">
+                                                <input type="radio" class="btn-check" name="btnradio" id="btnradio1{{ nft[1] }}"
+                                                       autocomplete="off" value="5" checked>
+                                                <label class="btn btn-outline-primary" for="btnradio1{{ nft[1] }}">5 min</label>
+
+                                                <input type="radio" class="btn-check" name="btnradio" id="btnradio2{{ nft[1] }}"
+                                                       autocomplete="off" value="10">
+                                                <label class="btn btn-outline-primary" for="btnradio2{{ nft[1] }}">10 min</label>
+
+                                                <input type="radio" class="btn-check" name="btnradio" id="btnradio3{{ nft[1] }}"
+                                                       autocomplete="off" value="30">
+                                                <label class="btn btn-outline-primary" for="btnradio3{{ nft[1] }}">30 min</label>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <input type="hidden" name="nft_id" value="{{ nft[1] }}">
-                                        <button class="btn btn-success" id="sell">Sell
+                                        <button class="btn btn-success" id="sell" type="submit">Sell
                                         </button>
                                     </div>
                                 </div>

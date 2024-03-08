@@ -1,9 +1,9 @@
 import datetime
 import time
 
-time_check = dict()
-
-print(round(datetime.datetime.now().timestamp()))
+for i in range(5):
+    print(round(datetime.datetime.now().timestamp()))
+    time.sleep(1)
 # time_check['start'] = start
 # time.sleep(5)
 # end = round(datetime.datetime.now().timestamp())

@@ -46,7 +46,7 @@ header {
     width: 7rem;
 }
 
-.nft-contanier {
+.nft-container {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;

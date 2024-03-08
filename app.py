@@ -6,9 +6,6 @@ from contract import w3, contract, accounts
 app = Flask(__name__)
 app.secret_key = 'blockchain123'
 
-print(contract.functions.getArrayNFT().call())
-print(contract.functions.getNftTransfers().call())
-
 
 def add_account(address):
     session['address'] = address
@@ -148,13 +145,6 @@ def transfer_history():
         return render_template('transfer_history.html', transfers=transfers, user=view_account())
 
 
-@app.route('/trading_platform', methods=['GET', 'POST'])
-def trading_platform():
-    check_account()
-    NFT_list = contract.functions.getArrayNFT().call()
-    return render_template('trading_platform.html', Nft_list=NFT_list, user=view_account())
-
-
 @app.route('/create_nft', methods=["GET", "POST"])
 def create_nft():
     check_account()
@@ -170,15 +160,27 @@ def create_nft():
 @app.route('/my_nft', methods=["GET", "POST"])
 def my_nft():
     check_account()
+    # [('0x7B2f5243C7E300803eb2D00577Fd8516968a4501', 0, 'm0nkeyNFT', 'monkey0.png', 5, False, False)]
+    # [(0, 0, '0x7B2f5243C7E300803eb2D00577Fd8516968a4501', 5, 50, False, 1709702546, 1709702846, '0x433A8a74a648D80cD1296858EAcCCbb3A68e8d7B', 100)]
     NFT_list = contract.functions.getArrayNFT().call()
-    # [('0xeC5c22233B644f70BD567014d8473cB7B229d03C', 0, 'GOLD', 'monkey0.png', 3, false, false)]
     if request.method == 'POST':
         amount = int(request.form.get('amount'))
         price = int(request.form.get('price'))
         nft_id = int(request.form.get('nft_id'))
-        contract.functions.sendInAuction(nft_id, amount, price).transact({'from': view_account()})
+        time_nft = int(request.form.get('btnradio'))
+        print(nft_id, amount, price, time_nft)
+        contract.functions.sendInAuction(nft_id, amount, price, time_nft).transact({'from': view_account()})
         return redirect('my_nft')
     return render_template('myNFT.html', NFT_list=NFT_list, user=view_account())
+
+
+@app.route('/trading_platform', methods=['GET', 'POST'])
+def trading_platform():
+    check_account()
+    NFT_list = contract.functions.getArrayNFT().call()
+    Transfer_list = contract.functions.getNftTransfers().call()
+    return render_template('trading_platform.html', Nft_list=NFT_list, user=view_account(),
+                           Transfer_list=Transfer_list)
 
 
 @app.route('/my_collection', methods=["GET", "POST"])

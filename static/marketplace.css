@@ -1,0 +1,25 @@
+.nft-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 10rem;
+    margin-bottom: 3rem;
+}
+
+.nft {
+    border: 5px solid black;
+    border-radius: 20px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    box-sizing: content-box;
+
+}
+
+.inf-in-card {
+    opacity: 75%;
+    color: rgb(128, 128, 128);
+}

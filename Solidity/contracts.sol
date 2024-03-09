@@ -24,22 +24,23 @@ contract app {
         string currency;
     }
     struct Nft{
-        address owner;
         uint id;
         string name;
         string picture;
+    }
+
+    struct nftUser{
+        uint idNftUser;
+        address owner;
+        uint idNft;
         uint amount;
         bool inAuction;
         bool inCollection;
-        // bool status;
     }
-    // struct NftCollection{
-    //     uint id;
-    // }
 
     struct nftTransfer{
         uint id;
-        uint idNft;
+        uint idNftUser;
         address owner;
         uint amount;
         uint price;
@@ -50,7 +51,8 @@ contract app {
         uint bid;
     }
 
-    Nft[] public arrayNft;
+    nftUser[] public arrayNftUser;
+    Nft[] public nftArray;
     nftTransfer[] public nftTransfers;
     address[] public accounts;
     Transfer[] public transfers;
@@ -65,7 +67,7 @@ contract app {
         NFT = new MyNFT();
         signup("ruslan", "123");
         createNft("m0nkeyNFT", "monkey0.png", 10);
-        createNft("m0nkeyNFTBlue", "monkey1.png", 7);
+        // createNft("m0nkeyNFTBlue", "monkey1.png", 7);
     }
 
     // Creating functions registration
@@ -135,8 +137,9 @@ contract app {
     //Creting functions NFT
 
     function createNft (string memory _name, string memory _picture, uint _amount) public {
-        NFT.mint(msg.sender, arrayNft.length, _amount);
-        arrayNft.push(Nft(msg.sender, arrayNft.length, _name, _picture, _amount, false, false));
+        NFT.mint(msg.sender, nftArray.length, _amount);
+        nftArray.push(Nft(nftArray.length, _name, _picture));
+        arrayNftUser.push(nftUser(arrayNftUser.length, msg.sender, nftArray.length - 1, _amount, false, false));
     }
 
     function getBalanceNft(uint _id) public view returns(uint){
@@ -148,50 +151,79 @@ contract app {
     }
 
     function getArrayNFT() public view returns(Nft[] memory){
-        return arrayNft;
+        // 0,m0nkeyNFT,monkey0.png
+        return nftArray;
+    }
+
+    function getUserNft() public view returns(nftUser[] memory){
+        // 0,0x7B2f5243C7E300803eb2D00577Fd8516968a4501,0,10,false,false
+        return arrayNftUser;
+    }
+
+    function getNftTransfers() public view returns(nftTransfer[] memory){
+        return nftTransfers;
     }
 
 
-    function sendInAuction(uint _id, uint _amount, uint _price, uint _minutes) public{
-        require(getBalanceNft(_id) >= _amount, "not enough tokens");
+
+
+
+    function sendInAuction(uint _id, uint _amount, uint _price, uint _minutes) public{ //In parametrs Id UserNFT
+        require(getBalanceNft(arrayNftUser[_id].idNft) >= _amount, "not enough tokens");
         require(_amount > 0, "It is impossible to issue 0 tokens");
-        require(arrayNft[_id].inAuction == false, "nft is already at auction");
-        require(arrayNft[_id].inCollection == false, "nft in collection");
-        arrayNft[_id].inAuction = true;
+        require(arrayNftUser[_id].inAuction == false, "nft is already at auction");
+        require(arrayNftUser[_id].inCollection == false, "nft in collection");
+        arrayNftUser[_id].inAuction = true;
         uint start = block.timestamp;
         nftTransfers.push(nftTransfer(nftTransfers.length, _id, msg.sender, _amount,
         _price, true, start, start + _minutes*60, msg.sender, 0));
-
     }
 
-    function placeBet(uint _id, uint _bet, uint256 _time) public{
+    function placeBet(uint _id, uint _bet, uint256 _time) public{ //In parametrs Id Transfer
         require(_id < nftTransfers.length, "there is no such transfer" );
         require(nftTransfers[_id].owner != msg.sender, "you can't buy your own nft");
         require(nftTransfers[_id].status == true, "there is no such transfer");
         require(getBalanceToken() >= nftTransfers[_id].amount, "not enough funds to buy");
         require(nftTransfers[_id].end > _time, "auction time is out");
         require(nftTransfers[_id].bid < _bet, "your bid must be greater than the previous one");
+        if (nftTransfers[_id].bid > 0){
+            sendTransferTokenRecipient(myContract, nftTransfers[_id].recipient, nftTransfers[_id].bid);
+        }
+        sendTransferToken(myContract, _bet);
         nftTransfers[_id].recipient = msg.sender;
         nftTransfers[_id].bid = _bet;
+
     }
 
-    function buyNft(uint _id, uint _time) public {
+    function checkNFT(uint _id, address _recipient) private view returns (int){
+        int indexNft = -1;
+        for (uint i = 0; i < arrayNftUser.length; i++ ){
+            if (arrayNftUser[i].idNft == _id && arrayNftUser[i].owner == _recipient ){
+                return int(i);
+            }
+        }
+        return indexNft;
+    }
+
+    function buyNft(uint _id, uint _time) public{ //In parametrs Id Transfer
         require(nftTransfers[_id].end < _time, "nft still at auction");
         require(nftTransfers[_id].status == true, "there is no such transfer");
         if (nftTransfers[_id].price < nftTransfers[_id].bid){
-            sendTransferTokenRecipient(nftTransfers[_id].recipient, nftTransfers[_id].owner, nftTransfers[_id].bid);
-            NFT.transferNft(nftTransfers[_id].owner, nftTransfers[_id].recipient, nftTransfers[_id].idNft, nftTransfers[_id].amount);
-            arrayNft.push(Nft(nftTransfers[_id].recipient, nftTransfers[_id].idNft, arrayNft[nftTransfers[_id].idNft].name,
-            arrayNft[nftTransfers[_id].idNft].picture, nftTransfers[_id].amount, false, false ));
+            sendTransferTokenRecipient(myContract, nftTransfers[_id].owner, nftTransfers[_id].bid);
+            NFT.transferNft(nftTransfers[_id].owner, nftTransfers[_id].recipient, arrayNftUser[nftTransfers[_id].idNftUser].idNft , nftTransfers[_id].amount);
+            int check = checkNFT(arrayNftUser[nftTransfers[_id].idNftUser].idNft, nftTransfers[_id].recipient);
+            if (check >= 0){
+                arrayNftUser[uint(check)].amount += nftTransfers[_id].amount;
+            }else {
+                arrayNftUser.push(nftUser(arrayNftUser.length, nftTransfers[_id].recipient, arrayNftUser[nftTransfers[_id].idNftUser].idNft, nftTransfers[_id].amount, false, false ));
+            }
         }
-        arrayNft[nftTransfers[_id].idNft].amount = getbalanceNftOwner(nftTransfers[_id].owner, nftTransfers[_id].idNft);
-        arrayNft[nftTransfers[_id].idNft].inAuction = false;
+        arrayNftUser[nftTransfers[_id].idNftUser].amount = getbalanceNftOwner(nftTransfers[_id].owner, arrayNftUser[nftTransfers[_id].idNftUser].idNft);
+        arrayNftUser[nftTransfers[_id].idNftUser].inAuction = false;
         nftTransfers[_id].status = false;
     }
 
-    function getNftTransfers() public view returns(nftTransfer[] memory){
-            return nftTransfers;
-    }
+
 
 }
 

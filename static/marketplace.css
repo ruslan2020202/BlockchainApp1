@@ -23,3 +23,11 @@
     opacity: 75%;
     color: rgb(128, 128, 128);
 }
+
+.timer{
+    font-size: 25px;
+}
+
+.input-group{
+    border-radius: 5px;
+}

@@ -11,6 +11,10 @@
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ url_for('static',filename='mynft.css') }}">
+    <script>
+        console.log('{{ NFT_list }}')
+        console.log('{{ Nft_cards }}')
+    </script>
     <title>My NFT</title>
 </head>
 <body>
@@ -21,26 +25,27 @@
             <button type="button" class="btn btn-outline-primary">Назад</button>
         </a>
         <h1 class="header-text text-center">Мои NFT</h1>
-
     </header>
+        {#     [(0, 'm0nkeyNFT', 'monkey0.png')]#}
+        {#     [(0, '0x7B2f5243C7E300803eb2D00577Fd8516968a4501', 0, 10, False, False)]#}
     <div class="nft-container">
-        {% for nft in NFT_list if nft[0]==user and nft[4] != 0 %}
-            <div class="nft" id="{{ nft[1] }}">
-                <img src="{{ url_for('static',filename='image/%s'|format(nft[3])) }}" alt="nft" height="200"
+        {% for nft in NFT_cards if nft[1] == user and nft[3] > 0%}
+            <div class="nft" id="{{ nft[0] }}">
+                <img src="{{ url_for('static',filename='image/%s'|format(NFT_list[nft[2]][2])) }}" alt="nft" height="200"
                      width="400">
-                <h3>{{ nft[2] }}</h3>
-                <p>Количество: {{ nft[4] }}</p>
-                {% if nft[5]== False %}
+                <h3>{{ NFT_list[nft[2]][1] }}</h3>
+                <p>Количество: {{ nft[3] }}</p>
+                {% if nft[4] == False %}
                     <p class="inf-in-card">Не находится на аукционе</p>
                     <button class="btn btn-success" id="sell" type="button" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal{{ nft[1] }}">Sell
+                            data-bs-target="#exampleModal{{ nft[0] }}">Sell
                     </button>
-                {% elif nft[5]== True %}
+                {% elif nft[4]== True %}
                     <p class="inf-in-card">На аукционе</p>
                     <button class="btn btn-success disabled" id="sell" type="button">Sell
                     </button>
                 {% endif %}
-                <div class="modal fade" id="exampleModal{{ nft[1] }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                <div class="modal fade" id="exampleModal{{ nft[0] }}" tabindex="-1" aria-labelledby="exampleModalLabel"
                      aria-hidden="true">
                     <div class="modal-dialog modal-dialog-center">
                         <div class="modal-content">
@@ -51,15 +56,15 @@
                             </div>
                             <form action="{{ url_for("my_nft") }}" method="post">
                                 <div class="modal-body">
-                                    <div class="nft-modal" id="{{ nft[1] }}">
-                                        <img src="{{ url_for('static',filename='image/%s'|format(nft[3])) }}"
+                                    <div class="nft-modal" id="{{ nft[0] }}">
+                                        <img src="{{ url_for('static',filename='image/%s'|format(NFT_list[nft[2]][2])) }}"
                                              class="img-modal" alt="nft"
                                              height="200"
                                              width="300">
-                                        <h3>{{ nft[2] }}</h3>
+                                        <h3>{{ NFT_list[nft[2]][1] }}</h3>
                                         <div class="sell-nft">
                                             <input class="form-control" type="number" name="amount" id="formAmount"
-                                                   placeholder="Количество" min="1" max="{{ nft[4] }}" required>
+                                                   placeholder="Количество" min="1" max="{{ nft[3] }}" required>
                                             <div class="input-group">
                                                 <input type="text" class="form-control"
                                                        aria-label="Amount (to the nearest dollar)"
@@ -67,22 +72,22 @@
                                                 <span class="input-group-text">FR</span>
                                             </div>
                                             <div class="btn-group" role="group">
-                                                <input type="radio" class="btn-check" name="btnradio" id="btnradio1{{ nft[1] }}"
-                                                       autocomplete="off" value="5" checked>
-                                                <label class="btn btn-outline-primary" for="btnradio1{{ nft[1] }}">5 min</label>
+                                                <input type="radio" class="btn-check" name="btnradio" id="btnradio1{{ nft[0] }}"
+                                                       autocomplete="off" value="1" checked>
+                                                <label class="btn btn-outline-primary" for="btnradio1{{ nft[0] }}">5 min</label>
 
-                                                <input type="radio" class="btn-check" name="btnradio" id="btnradio2{{ nft[1] }}"
+                                                <input type="radio" class="btn-check" name="btnradio" id="btnradio2{{ nft[0] }}"
                                                        autocomplete="off" value="10">
-                                                <label class="btn btn-outline-primary" for="btnradio2{{ nft[1] }}">10 min</label>
+                                                <label class="btn btn-outline-primary" for="btnradio2{{ nft[0] }}">10 min</label>
 
-                                                <input type="radio" class="btn-check" name="btnradio" id="btnradio3{{ nft[1] }}"
+                                                <input type="radio" class="btn-check" name="btnradio" id="btnradio3{{ nft[0] }}"
                                                        autocomplete="off" value="30">
-                                                <label class="btn btn-outline-primary" for="btnradio3{{ nft[1] }}">30 min</label>
+                                                <label class="btn btn-outline-primary" for="btnradio3{{ nft[0] }}">30 min</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <input type="hidden" name="nft_id" value="{{ nft[1] }}">
+                                        <input type="hidden" name="nft_id" value="{{ nft[0] }}">
                                         <button class="btn btn-success" id="sell" type="submit">Sell
                                         </button>
                                     </div>

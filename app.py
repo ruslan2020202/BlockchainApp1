@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, url_for, redirect, session
 
-from datetime import datetime
+import datetime
 from contract import w3, contract, accounts
 
 app = Flask(__name__)
@@ -160,27 +160,46 @@ def create_nft():
 @app.route('/my_nft', methods=["GET", "POST"])
 def my_nft():
     check_account()
-    # [('0x7B2f5243C7E300803eb2D00577Fd8516968a4501', 0, 'm0nkeyNFT', 'monkey0.png', 5, False, False)]
-    # [(0, 0, '0x7B2f5243C7E300803eb2D00577Fd8516968a4501', 5, 50, False, 1709702546, 1709702846, '0x433A8a74a648D80cD1296858EAcCCbb3A68e8d7B', 100)]
     NFT_list = contract.functions.getArrayNFT().call()
+    NFT_cards = contract.functions.getUserNft().call()
+    # [(0, 'm0nkeyNFT', 'monkey0.png')]
+    # [(0, '0x7B2f5243C7E300803eb2D00577Fd8516968a4501', 0, 10, False, False)]
     if request.method == 'POST':
         amount = int(request.form.get('amount'))
         price = int(request.form.get('price'))
         nft_id = int(request.form.get('nft_id'))
         time_nft = int(request.form.get('btnradio'))
-        print(nft_id, amount, price, time_nft)
         contract.functions.sendInAuction(nft_id, amount, price, time_nft).transact({'from': view_account()})
         return redirect('my_nft')
-    return render_template('myNFT.html', NFT_list=NFT_list, user=view_account())
+    return render_template('myNFT.html', NFT_list=NFT_list, NFT_cards=NFT_cards, user=view_account())
 
 
 @app.route('/trading_platform', methods=['GET', 'POST'])
 def trading_platform():
     check_account()
     NFT_list = contract.functions.getArrayNFT().call()
+    NFT_cards = contract.functions.getUserNft().call()
     Transfer_list = contract.functions.getNftTransfers().call()
-    return render_template('trading_platform.html', Nft_list=NFT_list, user=view_account(),
-                           Transfer_list=Transfer_list)
+    # [(0, 0, '0x7B2f5243C7E300803eb2D00577Fd8516968a4501', 3, 50, True, 1710012242, 1710014042,'0x7B2f5243C7E300803eb2D00577Fd8516968a4501', 0)]
+    if request.method == 'POST':
+        bet = int(request.form.get('bet'))
+        transfer_nft = int(request.form.get('transferId'))
+        contract.functions.placeBet(transfer_nft, bet,
+                                    round(datetime.datetime.now().timestamp())).transact({'from': view_account()})
+        return redirect('trading_platform')
+    return render_template('trading_platform.html', NFT_list=NFT_list, NFT_cards=NFT_cards,
+                           user=view_account(), Transfer_list=Transfer_list)
+
+
+@app.route('/buyNft', methods=['POST'])
+def buy_nft():
+    check_account()
+    data = request.json
+    print(data)
+    if data >= 0:
+        contract.functions.buyNft(int(data), round(datetime.datetime.now().timestamp()) + 1).transact(
+            {'from': view_account()})
+        return 'OK', 200
 
 
 @app.route('/my_collection', methods=["GET", "POST"])

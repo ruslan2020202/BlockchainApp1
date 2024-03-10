@@ -184,9 +184,11 @@ def trading_platform():
     if request.method == 'POST':
         bet = int(request.form.get('bet'))
         transfer_nft = int(request.form.get('transferId'))
-        contract.functions.placeBet(transfer_nft, bet,
+        try:
+            contract.functions.placeBet(transfer_nft, bet,
                                     round(datetime.datetime.now().timestamp())).transact({'from': view_account()})
-        return redirect('trading_platform')
+        except:
+            return redirect('trading_platform')
     return render_template('trading_platform.html', NFT_list=NFT_list, NFT_cards=NFT_cards,
                            user=view_account(), Transfer_list=Transfer_list)
 
@@ -195,11 +197,12 @@ def trading_platform():
 def buy_nft():
     check_account()
     data = request.json
-    print(data)
-    if data >= 0:
+    try:
         contract.functions.buyNft(int(data), round(datetime.datetime.now().timestamp()) + 1).transact(
             {'from': view_account()})
         return 'OK', 200
+    except:
+        return redirect(url_for('trading_platform'))
 
 
 @app.route('/my_collection', methods=["GET", "POST"])

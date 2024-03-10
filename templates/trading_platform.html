@@ -109,7 +109,7 @@
                 <div>
                     <p class="inf-in-card">Минимальная ставка: {{ transfer[4] }}</p>
                     {% if transfer[-1] > 0 and transfer[-2] != user %}
-                        <p class="inf-in-card">Последняя ставка: {{ transfer[4] }}</p>
+                        <p class="inf-in-card">Последняя ставка: {{ transfer[-1] }}</p>
                     {% elif transfer[-1] > 0 and transfer[-2] == user %}
                         <p class="inf-in-card">Последняя ставка(ваша): {{ transfer[-1] }}</p>
                     {% elif transfer[2] == user %}
@@ -135,6 +135,7 @@
                                 window.location.href = '{{ url_for('trading_platform') }}'
                             } else {
                                 console.error('Ошибка при выполнении запроса на сервер')
+                                window.location.href = '{{ url_for('trading_platform') }}'
                             }
                         })
                         .catch(error => {

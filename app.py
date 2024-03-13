@@ -180,15 +180,16 @@ def trading_platform():
     NFT_list = contract.functions.getArrayNFT().call()
     NFT_cards = contract.functions.getUserNft().call()
     Transfer_list = contract.functions.getNftTransfers().call()
-    # [(0, 0, '0x7B2f5243C7E300803eb2D00577Fd8516968a4501', 3, 50, True, 1710012242, 1710014042,'0x7B2f5243C7E300803eb2D00577Fd8516968a4501', 0)]
     if request.method == 'POST':
         bet = int(request.form.get('bet'))
         transfer_nft = int(request.form.get('transferId'))
         try:
             contract.functions.placeBet(transfer_nft, bet,
                                     round(datetime.datetime.now().timestamp())).transact({'from': view_account()})
-        except:
             return redirect('trading_platform')
+        except:
+            return render_template('trading_platform.html', NFT_list=NFT_list, NFT_cards=NFT_cards,
+                                   user=view_account(), Transfer_list=Transfer_list, error='error')
     return render_template('trading_platform.html', NFT_list=NFT_list, NFT_cards=NFT_cards,
                            user=view_account(), Transfer_list=Transfer_list)
 

@@ -1,13 +1,9 @@
 let file = document.getElementById('formFile')
 const fromty = document.querySelector("#input-image")
 file.addEventListener('change', function () {
-    let imgIn = document.querySelector("img")
+    let imgIn = document.querySelector("#imageName")
     console.log(file.value)
-    try {
-        if (imgIn) {
-            fromty.removeChild(imgIn)
-        }
-    } catch (err) {
+    if (imgIn) {
         fromty.removeChild(imgIn)
     }
     if (file.value !== '') {
@@ -16,7 +12,7 @@ file.addEventListener('change', function () {
         img.src = `static/image/${imgdata[2]}`
         img.width = 300
         img.height = 200
-        img.setAttribute('name', 'imageName')
+        img.setAttribute('id', 'imageName')
         fromty.appendChild(img)
     }
 

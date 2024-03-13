@@ -1,3 +1,7 @@
+body{
+    background:black;
+    color:wheat;
+}
 .container{
     height: 100vh;
     display: flex;
@@ -18,7 +22,7 @@
     gap: 1rem;
 }
 .btn{
-    width: 7rem;
+    width: 10rem;
 }
 
 .login{
@@ -27,3 +31,18 @@
     border-radius: 20px;
 }
 
+.btn-signup {
+    background: wheat;
+}
+
+.btn-signup:hover {
+    background-color: wheat;
+    color: white;
+}
+
+.btn.btn-signup:active {
+    background-color: wheat;
+    color: white;
+    border: none;
+    opacity: 90%;
+}

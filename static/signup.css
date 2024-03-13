@@ -1,3 +1,7 @@
+body{
+    background: black;
+    color:wheat;
+}
 .container {
     height: 100vh;
     display: flex;
@@ -28,3 +32,18 @@
     border-radius: 20px;
 }
 
+.btn-login {
+    border: 2px solid wheat;
+    color: wheat;
+}
+
+.btn-login:hover {
+    background-color: wheat;
+    color: black;
+}
+
+.btn.btn-login:active {
+    background-color: wheat;
+    color: black;
+    opacity: 90%;
+}

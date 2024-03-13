@@ -7,16 +7,22 @@
 header {
     display: flex;
     justify-content: space-between;
-    background:white;
+    background:black;
 }
 
+.offcanvas{
+    background: black;
+    color: wheat;
+}
 .btn-menu {
     width: 100%;
     text-align: left;
+    color: wheat;
 }
 
 .btn-menu:hover {
-    background-color: whitesmoke;
+    background-color: navajowhite;
+    color: black;
 }
 
 .menu {
@@ -32,7 +38,7 @@ header {
 }
 
 .logout {
-    border: 1px solid black;
+    border: 1px solid;
     text-align: center;
 }
 
@@ -40,10 +46,15 @@ header {
 .btn-menu-in {
     width: 90%;
     text-align: left;
+    color: navajowhite;
 }
 
 .collapse {
     display: flex;
     /*justify-content: center;*/
     flex-direction: column;
+}
+
+.btn-close{
+    background-color: wheat;
 }

@@ -1,3 +1,8 @@
+body{
+    background: black;
+    color: wheat;
+}
+
 .nft {
     border: 5px solid black;
     border-radius: 20px;
@@ -8,6 +13,7 @@
     align-items: center;
     gap: 15px;
     box-sizing: content-box;
+    background: -webkit-linear-gradient(bottom, wheat, black);
 
 }
 
@@ -33,13 +39,6 @@
     color: rgb(128, 128, 128);
 }
 
-header {
-    display: flex;
-    height: 15vh;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 5rem;
-}
 
 
 .btn-outline-primary {
@@ -74,4 +73,9 @@ img{
     display: flex;
     flex-direction: column;
     gap:1rem;
+}
+
+.modal-content{
+    background: black;
+    border: 1px solid;
 }

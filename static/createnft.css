@@ -1,7 +1,6 @@
-header {
-    display: flex;
-    height: 15vh;
-    align-items: center;
+body{
+    background: black;
+    color:wheat;
 }
 
 .input-nft {
@@ -33,4 +32,20 @@ img {
 .create-container{
     display: flex;
     justify-content: center;
+}
+
+.btn-signup {
+    background: wheat;
+}
+
+.btn-signup:hover {
+    background-color: wheat;
+    color: white;
+}
+
+.btn.btn-signup:active {
+    background-color: wheat;
+    color: white;
+    border: none;
+    opacity: 90%;
 }

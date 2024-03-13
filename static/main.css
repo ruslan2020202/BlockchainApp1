@@ -10,7 +10,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    /*background-color: darkslateblue !important;*/
+    background: black;
+    color: wheat;
 
 
 }
@@ -21,21 +22,48 @@ body {
 
 }
 
-.btn{
+.btn {
     width: 5.5rem;
 }
+
 .main {
     display: flex;
     flex-direction: column;
-    border:2px solid black;
     padding: 20px;
     border-radius: 20px;
-    gap:1rem;
+    gap: 1rem;
 }
 
-h1{
+.btn-signup {
+    background: wheat;
+}
 
-    font-size: 100px;
+.btn-signup:hover {
+    background-color: wheat;
+    color: white;
+}
+
+.btn.btn-signup:active {
+    background-color: wheat;
+    color: white;
+    border: none;
+    opacity: 90%;
+}
+
+.btn-login {
+    border: 2px solid wheat;
+    color: wheat;
+}
+
+.btn-login:hover {
+    background-color: wheat;
+    color: black;
+}
+
+.btn.btn-login:active {
+    background-color: wheat;
+    color: black;
+    opacity: 90%;
 }
 
 

@@ -1,11 +1,23 @@
-import web3
 from web3 import Web3
 
-w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
+w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:8545"))
 
 accounts = w3.eth.accounts
 
-contract_address = '0x6eD3238391A8F8c50589A1727D424CC14F9AE0d3'
+for account in accounts:
+    w3.geth.personal.unlock_account(
+        account, "", 0
+    )  # второй аргумент - пароль, третий - время "постоянной" разблокировки
+
+# Проверка успешной разблокировки
+for account in accounts:
+    is_unlocked = w3.geth.personal.unlock_account(account, "", 0)
+    if is_unlocked:
+        print(f"Аккаунт {account} успешно разблокирован")
+    else:
+        print(f"Не удалось разблокировать аккаунт {account}")
+
+contract_address = '0xa0D6d5ebBCd11B392D99c082732181e7c3cD8AA0'
 
 contract_abi = [
 	{

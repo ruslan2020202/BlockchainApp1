@@ -1,0 +1,13 @@
+=============== Mar 15, 2024 (MSK) ===============
+22:48:32.536010 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+22:48:32.545967 db@open opening
+22:48:32.548348 version@stat F·[] S·0B[] Sc·[]
+22:48:32.553599 db@janitor F·2 G·0
+22:48:32.553672 db@open done T·7.655086ms
+23:40:32.594124 memdb@flush N·36945 S·3MiB
+23:40:32.647163 memdb@flush created L0@3 N·36945 S·781KiB "loc..seq,v30":"version,v1"
+23:40:32.648184 version@stat F·[1] S·781KiB[781KiB] Sc·[0.25]
+23:40:32.651693 memdb@flush committed F·1 T·56.895742ms
+23:40:32.686308 journal@remove removed @1
+23:49:34.349543 db@close closing
+23:49:34.350153 db@close done T·607.88µs

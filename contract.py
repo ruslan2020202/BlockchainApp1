@@ -772,3 +772,4 @@ contract_abi = [
 ]
 
 contract = w3.eth.contract(address=contract_address, abi=contract_abi)
+

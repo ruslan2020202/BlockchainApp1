@@ -1,3 +1,8 @@
+body{
+    background: black;
+    color:wheat;
+}
+
 .nft-container {
     display: flex;
     justify-content: space-around;
@@ -7,7 +12,7 @@
 }
 
 .nft {
-    border: 5px solid black;
+    border: 5px solid;
     border-radius: 20px;
     width: 400px;
     display: flex;

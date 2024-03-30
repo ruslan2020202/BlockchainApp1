@@ -36,3 +36,8 @@ body{
 .input-group{
     border-radius: 5px;
 }
+
+img{
+    border-start-start-radius: 20px;
+    border-start-end-radius: 20px;
+}

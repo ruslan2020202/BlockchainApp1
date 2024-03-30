@@ -17,7 +17,8 @@
 <body>
 <div class="container">
     <header class="navbar sticky-top">
-        <a href="{{ url_for("signed") }}"><img src="{{ url_for('static', filename='image/nft_icon.png') }}" alt="" width="50" height="50"></a>
+        <a href="{{ url_for("signed") }}"><img src="{{ url_for('static', filename='image/nft_icon.png') }}" alt=""
+                                               width="50" height="50"></a>
         <h1>Торговая площадка</h1>
         <a data-bs-toggle="offcanvas" href="#offcanvasWithBothOptions" role="button"
            aria-controls="offcanvasWithBothOptions">
@@ -81,97 +82,100 @@
     {% endif %}
     <div class="nft-container">
         {% for transfer in Transfer_list if transfer[5] == True %}
-            <div class="nft" id="{{ transfer[0] }}">
-                <img src="{{ url_for('static',filename='image/%s'|format(NFT_list[NFT_cards[transfer[1]][2]][2])) }}"
-                     alt="nft"
-                     height="200"
-                     width="400">
-                <h3>{{ NFT_list[NFT_cards[transfer[1]][2]][1] }}</h3>
-                <p>Количество: {{ transfer[3] }}</p>
-                <div class="timer" id="timer{{ transfer[0] }}"></div>
-                <form action="{{ url_for('trading_platform') }}" method="post">
-                    <div class="input-group">
-                        {% if transfer[-1] > 0 %}
-                            <input type="number" class="form-control" placeholder="Ваша ставка" name="bet"
-                                   aria-describedby="button-addon{{ transfer[0] }}" min="{{ transfer[-1] + 1 }}"
-                                   required>
-                        {% elif transfer[-1] == 0 %}
-                            <input type="number" class="form-control" placeholder="Ваша ставка" name="bet"
-                                   aria-describedby="button-addon{{ transfer[0] }}" min="{{ transfer[4] + 1 }}"
-                                   required>
-                        {% endif %}
-                        {% if transfer[2] != user %}
-                            <button class="btn btn-success" type="submit" name="transferId" value="{{ transfer[0] }}">
-                                Bet
-                            </button>
-                        {% elif transfer[2] == user %}
-                            <button class="btn btn-success disabled" type="submit" name="transferId"
-                                    value="{{ transfer[0] }}">
-                                Bet
-                            </button>
-                        {% endif %}
-                    </div>
-                </form>
-                <div>
-                    <p class="inf-in-card">Минимальная ставка: {{ transfer[4] }}</p>
-                    {% if transfer[-1] > 0 and transfer[-2] != user %}
-                        <p class="inf-in-card">Последняя ставка: {{ transfer[-1] }}</p>
-                    {% elif transfer[-1] > 0 and transfer[-2] == user %}
-                        <p class="inf-in-card">Последняя ставка(ваша): {{ transfer[-1] }}</p>
+        <div class="nft" id="{{ transfer[0] }}">
+            <img src="{{ url_for('static',filename='image/%s'|format(NFT_list[NFT_cards[transfer[1]][2]][2])) }}"
+                 alt="nft"
+                 height="200"
+                 width="400">
+            <h3>{{ NFT_list[NFT_cards[transfer[1]][2]][1] }}</h3>
+            <p>Количество: {{ transfer[3] }}</p>
+            <div class="timer" id="timer{{ transfer[0] }}"></div>
+            <form action="{{ url_for('trading_platform') }}" method="post">
+                <div class="input-group">
+                    {% if transfer[2] == user %}
+                    <input type="number" class="form-control" placeholder="Ваша ставка" name="bet"
+                           aria-describedby="button-addon{{ transfer[0] }}" disabled>
+                    {% elif transfer[-1] > 0 %}
+                    <input type="number" class="form-control" placeholder="Ваша ставка" name="bet"
+                           aria-describedby="button-addon{{ transfer[0] }}" min="{{ transfer[-1] + 1 }}"
+                           required>
+                    {% elif transfer[-1] == 0 %}
+                    <input type="number" class="form-control" placeholder="Ваша ставка" name="bet"
+                           aria-describedby="button-addon{{ transfer[0] }}" min="{{ transfer[4] + 1 }}"
+                           required>
+                    {% endif %}
+                    {% if transfer[2] != user %}
+                        <button class="btn btn-success" type="submit" name="transferId" value="{{ transfer[0] }}">
+                            Bet
+                        </button>
                     {% elif transfer[2] == user %}
-                        <p class="inf-in-card">Это ваша NFT!</p>
+                        <button class="btn btn-success disabled" type="submit" name="transferId"
+                                value="{{ transfer[0] }}">
+                            Bet
+                        </button>
                     {% endif %}
                 </div>
+            </form>
+            <div>
+                <p class="inf-in-card">Минимальная ставка: {{ transfer[4] }}</p>
+                {% if transfer[-1] > 0 and transfer[-2] != user %}
+                    <p class="inf-in-card">Последняя ставка: {{ transfer[-1] }}</p>
+                {% elif transfer[-1] > 0 and transfer[-2] == user %}
+                    <p class="inf-in-card">Последняя ставка(ваша): {{ transfer[-1] }}</p>
+                {% elif transfer[2] == user %}
+                    <p class="inf-in-card">Это ваша NFT!</p>
+                {% endif %}
             </div>
-            <script>
-                let inputTime{{ transfer[0] }} = document.getElementById('timer{{ transfer[0] }}')
-                let endTime{{ transfer[0] }} = Number('{{ transfer[7] }}')
+        </div>
+        <script>
+            let inputTime{{ transfer[0] }} = document.getElementById('timer{{ transfer[0] }}')
+            let endTime{{ transfer[0] }} = Number('{{ transfer[7] }}')
 
-                function sendTransferId{{ transfer[0] }}() {
-                    fetch('{{ url_for('buy_nft')}}', {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json;charset=utf-8",
-                            },
-                            body: JSON.stringify({{ transfer[0] }}),
-                        }
-                    )
-                        .then(response => {
-                            if (response.ok) {
-                                window.location.href = '{{ url_for('trading_platform') }}'
-                            } else {
-                                console.error('Ошибка при выполнении запроса на сервер')
-                                window.location.href = '{{ url_for('trading_platform') }}'
-                            }
-                        })
-                        .catch(error => {
-                            // Ошибка при выполнении запроса
-                            console.error('Ошибка при отправке запроса:', error)
-                        })
-                }
-
-                function updaterTime{{ transfer[0] }}() {
-                    let currentTime{{ transfer[0] }} = Number(String(Date.now()).slice(0, 10))
-                    let remainingTime{{ transfer[0] }} = endTime{{ transfer[0] }} - (currentTime{{ transfer[0] }})
-                    if (remainingTime{{ transfer[0] }} <= 0) {
-                        clearInterval(timerInterval{{ transfer[0] }})
-                        sendTransferId{{ transfer[0] }}()
-                    } else {
-                        let minutes{{ transfer[0] }} = Math.floor(remainingTime{{ transfer[0] }} / 60)
-                        let seconds{{ transfer[0] }} = remainingTime{{ transfer[0] }} % 60
-                        if (minutes{{ transfer[0] }} < 10) {
-                            minutes{{ transfer[0] }} = `0${minutes{{ transfer[0] }}}`
-                        }
-                        if (seconds{{ transfer[0] }} < 10) {
-                            seconds{{ transfer[0] }} = `0${seconds{{ transfer[0] }}}`
-                        }
-                        inputTime{{ transfer[0] }}.innerText = `${minutes{{ transfer[0] }}}:${seconds{{ transfer[0] }}}`
+            function sendTransferId{{ transfer[0] }}() {
+                fetch('{{ url_for('buy_nft')}}', {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json;charset=utf-8",
+                        },
+                        body: JSON.stringify({{ transfer[0] }}),
                     }
-                }
+                )
+                    .then(response => {
+                        if (response.ok) {
+                            window.location.href = '{{ url_for('trading_platform') }}'
+                        } else {
+                            console.error('Ошибка при выполнении запроса на сервер')
+                            window.location.href = '{{ url_for('trading_platform') }}'
+                        }
+                    })
+                    .catch(error => {
+                        // Ошибка при выполнении запроса
+                        console.error('Ошибка при отправке запроса:', error)
+                    })
+            }
 
-                let timerInterval{{ transfer[0] }} = setInterval(updaterTime{{ transfer[0] }}, 1000)
-                updaterTime{{ transfer[0] }}()
-            </script>
+            function updaterTime{{ transfer[0] }}() {
+                let currentTime{{ transfer[0] }} = Number(String(Date.now()).slice(0, 10))
+                let remainingTime{{ transfer[0] }} = endTime{{ transfer[0] }} - (currentTime{{ transfer[0] }})
+                if (remainingTime{{ transfer[0] }} <= 0) {
+                    clearInterval(timerInterval{{ transfer[0] }})
+                    sendTransferId{{ transfer[0] }}()
+                } else {
+                    let minutes{{ transfer[0] }} = Math.floor(remainingTime{{ transfer[0] }} / 60)
+                    let seconds{{ transfer[0] }} = remainingTime{{ transfer[0] }} % 60
+                    if (minutes{{ transfer[0] }} < 10) {
+                        minutes{{ transfer[0] }} = `0${minutes{{ transfer[0] }}}`
+                    }
+                    if (seconds{{ transfer[0] }} < 10) {
+                        seconds{{ transfer[0] }} = `0${seconds{{ transfer[0] }}}`
+                    }
+                    inputTime{{ transfer[0] }}.innerText = `${minutes{{ transfer[0] }}}:${seconds{{ transfer[0] }}}`
+                }
+            }
+
+            let timerInterval{{ transfer[0] }} = setInterval(updaterTime{{ transfer[0] }}, 1000)
+            updaterTime{{ transfer[0] }}()
+        </script>
         {% endfor %}
     </div>
 </div>

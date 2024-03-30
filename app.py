@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, url_for, redirect, session
 
 import datetime
+import logging
 from contract import w3, contract, accounts
 
 app = Flask(__name__)
@@ -213,4 +214,5 @@ def collection():
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
     app.run(debug=True)
